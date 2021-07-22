@@ -89,10 +89,10 @@ class RegistrationFormType extends AbstractType
             ])
             ->add('roles', ChoiceType::class ,[
                 'required' => true,
-                'choices' => array(
-                    'Sitter' => "ROLES_SITTER",
-                    'Master' => "ROLES_MASTER"
-                )
+                'choices' => [
+                    'Sitter' => "ROLE_SITTER",
+                    'Master' => "ROLE_MASTER"
+                ]
             ])
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,

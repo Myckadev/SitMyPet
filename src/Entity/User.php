@@ -72,7 +72,7 @@ class User implements UserInterface
     private ?int $city;
 
     /**
-     * @ORM\Column(type="array")
+     * @ORM\Column(type="json")
      */
     private array $roles = [];
 
@@ -110,6 +110,11 @@ class User implements UserInterface
      * @ORM\Column(type="boolean")
      */
     private $isVerified = false;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Pet::class, inversedBy="owner")
+     */
+    private $animaux;
 
     public function getId(): ?int
     {
@@ -343,6 +348,18 @@ class User implements UserInterface
     public function setIsVerified(bool $isVerified): self
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function getAnimaux(): ?Pet
+    {
+        return $this->animaux;
+    }
+
+    public function setAnimaux(?Pet $animaux): self
+    {
+        $this->animaux = $animaux;
 
         return $this;
     }

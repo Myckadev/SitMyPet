@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil!{% endblock %}
+
+{% block body %}
+    {{ app.user.nom }}
+    {% if is_granted("ROLES_MASTER") %}
+        <h1>MARCHE</h1>
+    {% endif %}
+{% endblock %}
