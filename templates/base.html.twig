@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap"
+          rel="stylesheet">
+
+    <title>SitMyPet</title>
+
+    <title>{% block title %}Welcome!{% endblock %}</title>
+
+    {% block stylesheets %}
+        <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" />
+
+        <link rel="stylesheet" href="{{ asset('css/animated.css')}}">
+        <link rel="stylesheet" href="{{ asset('css/fontawesome.css')}}">
+        <link rel="stylesheet" href="{{ asset('css/owl.css')}}">
+        <link rel="stylesheet" href="{{ asset('css/style.css')}}">
+        <link rel="stylesheet" href="{{ asset('css/templatemo-plot-listing.css')}}">
+    {% endblock %}
+
+
+</head>
+<body>
+
+
+
+
+<!-- ***** Header Area Start ***** -->
+<header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav class="main-nav">
+                    <!-- ***** Logo Start ***** -->
+                    <a href="{{ path('home') }}" class="logo">
+                    </a>
+                    <!-- ***** Logo End ***** -->
+                    <!-- ***** Menu Start ***** -->
+                    <ul class="nav">
+                        <li><a href="{{ path('home') }}" class="active">Home</a></li>
+                        {% if not app.user  %}
+                        <li><a href="{{ path('app_register') }}">register</a></li>
+                        <li><a href="{{ path('app_login') }}">login</a></li>
+                        {% else %}
+                        <li><a href="#">Profil</a></li>
+                        <li><a href="{{ path('app_logout') }}">logout</a></li>
+                        {% endif %}
+                        <li><a href="#">Contact Us</a></li>
+                        <li>
+                            <div class="main-white-button"><a href="#"><i class="fa fa-plus"></i> Add Your Listing</a>
+                            </div>
+                        </li>
+                    </ul>
+                    <a class='menu-trigger'>
+                        <span>Menu</span>
+                    </a>
+                    <!-- ***** Menu End ***** -->
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- ***** Header Area End ***** -->
+
+{% block body %} {% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('js/owl-carousel.js') }}"></script>
+    <script src="{{ asset('js/animation.js') }}"></script>
+    <script src="{{ asset('js/imagesloaded.js') }}"></script>
+    <script src="{{ asset('js/custom.js') }}"></script>
+{% endblock %}
+
+</body>
+
+
+</html>
