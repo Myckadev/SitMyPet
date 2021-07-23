@@ -7,6 +7,7 @@ use App\Form\UserProfilFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -48,25 +49,29 @@ class FrontController extends AbstractController
     }
 
     /**
-     * @Route("/profil/settings/{username}", name="app_profil_settings")
+     * @Route("/profil/settings/{id}", name="app_profil_settings")
      */
-    public function profilSettings(User $user, Request $request, EntityManagerInterface $entityManager){
+    public function profilSettings(User $user, Request $request,EntityManagerInterface $entityManager){
 
         $post = $request->attributes->get('user');
         if($this->getUser() != $post){
-            return $this->redirectToRoute('app_profil');
+            return $this->redirectToRoute("app_profil");
         }
 
         $form = $this->createForm(UserProfilFormType::class, $user);
         $form->handleRequest($request);
+
+
         if($form->isSubmitted() && $form->isValid()){
-            $picture = $form->get('profil_picture')->getData();
+            $picture = $form->get('editPicture')->getData();
 
             if($picture){
                 $namePicture = date('YmdHis').uniqid().$picture->getClientOriginalName();
 
                 $picture->move($this->getParameter('upload_directory'), $namePicture);
-                unlink($this->getParameter('upload_directory').'/'.$user->getProfilPicture());
+                if($namePicture !== 'default.png'){
+                    unlink($this->getParameter('upload_directory').'/'.$user->getProfilPicture());
+                }
                 $user->setProfilPicture($namePicture);
             }
 

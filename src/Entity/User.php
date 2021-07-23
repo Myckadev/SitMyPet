@@ -4,15 +4,21 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Exception;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\SerializerInterface;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @method string getUserIdentifier()
  * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
+ * @Vich\Uploadable
  */
-class User implements UserInterface
+class User implements UserInterface, \Serializable
 {
     /**
      * @ORM\Id
@@ -80,6 +86,12 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private ?string $profil_picture;
+
+    /**
+     * @Vich\UploadableField(mapping="profile_picture")
+     *
+     */
+    public $editPicture;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -229,6 +241,22 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getEditPicture()
+    {
+        return $this->editPicture;
+    }
+
+    /**
+     * @param mixed $editPicture
+     */
+    public function setEditPicture(File $editPicture = null): void
+    {
+        $this->editPicture = $editPicture;
+    }
+
     public function getCity(): ?int
     {
         return $this->city;
@@ -362,5 +390,43 @@ class User implements UserInterface
         $this->animaux = $animaux;
 
         return $this;
+    }
+
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->password,
+            $this->profil_picture,
+            $this->nom,
+            $this->prenom,
+            $this->adresse,
+            $this->age,
+            $this->rayon_action,
+            $this->username,
+            $this->email,
+            $this->description,
+            $this->ville,
+            $this->city
+        ));
+    }
+
+    public function unserialize($data)
+    {
+        list (
+            $this->id,
+            $this->password,
+            $this->profil_picture,
+            $this->nom,
+            $this->prenom,
+            $this->adresse,
+            $this->age,
+            $this->rayon_action,
+            $this->username,
+            $this->email,
+            $this->description,
+            $this->ville,
+            $this->city
+            ) = unserialize($data, array('allowed_classes' => false));
     }
 }

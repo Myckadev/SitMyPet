@@ -5,124 +5,126 @@
 
 
 {% block body %}
-
-    <div class="container emp-profile">
-        <form method="post">
-            <div class="row">
-                <div class="col-md-2">
-                    <div class="profile-img">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog"
-                             alt=""/>
-                    </div>
-                </div>
-                <div class="col-md-8">
-                    <div class="profile-head">
-                        <h5>
-                            Prénom: {{ app.user.prenom }} <br> Nom: {{ app.user.nom }}
-                        </h5>
-                        <h6>
-                            {{ app.user.age }} ans
-                        </h6>
-                        <p class="proile-rating">Note : <span>{{ app.user.note }}</span></p>
-                        <ul class="nav nav-tabs" id="myTab" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
-                                   aria-controls="home" aria-selected="true">Profil</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
-                                   aria-controls="profile" aria-selected="false">Tarifs</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile"/>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-2">
-                    <div class="profile-work">
-                        <p>Description : {{ app.user.description }}</p>
-                    </div>
-                </div>
-                <div class="col-md-8">
-                    <div class="tab-content profile-tab" id="myTabContent">
-                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <p>Pseudo:</p>
-                                </div>
-                                <div class="col-md-6">
-                                    <p>{{ app.user.username }} {{ app.user.sitter_verifie }}</p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <p>Email:</p>
-                                </div>
-                                <div class="col-md-4">
-                                    <p>{{ app.user.email}}</p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <label>Telephone :</label>
-                                </div>
-                                <div class="col-md-4">
-                                    <p>{{ app.user.telephone}}</p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <label>Adresse :  </label>
-                                </div>
-                                <div class="col-md-4">
-                                    <p>{{ app.user.adresse }} {{ app.user.ville }} {{ app.user.city }}</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                            <div class="row">
-                                <div class="col-md">
-                                    <label>Tarifs : </label>
-                                </div>
-                                <div class="col-md">
-                                    <p>{{ app.user.tarif }}</p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md">
-                                    <label>Hourly Rate</label>
-                                </div>
-                                <div class="col-md">
-                                    <p>10$/hr</p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md">
-                                    <label>Total Projects</label>
-                                </div>
-                                <div class="col-md">
-                                    <p>230</p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md">
-                                    <label>English Level</label>
-                                </div>
-                                <div class="col-md">
-                                    <p>Expert</p>
-                                </div>
-                            </div>
-
-
+    <div class="mainContainer">
+        <div class="container emp-profile">
+            <form method="post">
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="profile-img">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog"
+                                 alt=""/>
                         </div>
                     </div>
+                    <div class="col-md-8">
+                        <div class="profile-head">
+                            <h5>
+                                Prénom: {{ app.user.prenom }} <br> Nom: {{ app.user.nom }}
+                            </h5>
+                            <h6>
+                                {{ app.user.age }} ans
+                            </h6>
+                            <p class="profile-rating">Note : <span>{{ app.user.note }}</span></p>
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                                       aria-controls="home" aria-selected="true">Profil</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+                                       aria-controls="profile" aria-selected="false">Tarifs</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile"/>
+                    </div>
                 </div>
-            </div>
-        </form>
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="profile-work">
+                            <p>Description : {{ app.user.description }}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="tab-content profile-tab" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p>Pseudo:</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>{{ app.user.username }} {{ app.user.sitter_verifie }}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <p>Email:</p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <p>{{ app.user.email}}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label>Telephone :</label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <p>{{ app.user.telephone}}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label>Adresse :  </label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <p>{{ app.user.adresse }} {{ app.user.ville }} {{ app.user.city }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                <div class="row">
+                                    <div class="col-md">
+                                        <label>Tarifs : </label>
+                                    </div>
+                                    <div class="col-md">
+                                        <p>{{ app.user.tarif }}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md">
+                                        <label>Hourly Rate</label>
+                                    </div>
+                                    <div class="col-md">
+                                        <p>10$/hr</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md">
+                                        <label>Total Projects</label>
+                                    </div>
+                                    <div class="col-md">
+                                        <p>230</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md">
+                                        <label>English Level</label>
+                                    </div>
+                                    <div class="col-md">
+                                        <p>Expert</p>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
+
     {% block javascripts %}
 
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>

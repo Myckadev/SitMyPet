@@ -9,11 +9,13 @@
     height: 1100px;
 }
 
+/* conteneur du corps du texte sur toutes les pages */
 .mainContainer{
-    padding: 120px 0px;
+    padding: 150px 0px;
 }
-/*Style du formulaire de recherche*/
 
+
+/*Style du formulaire de recherche*/
 
 .input-header{
     font-style: normal;
@@ -26,18 +28,32 @@
 
     margin-left: 20px;
 
-    color: #929292;
+    color: #2D3E4E;
 }
 
 form#search-form select, form#search-form input, form#search-form input::placeholder{
     font-size: 18px;
 }
-form#search-form button{
+.main-button#matchMakingBtn{
+    background-color: #2D3E4E;
+    font-size: 18px;
+    color: #8CBDB9;
     transition: 1s;
 }
-form#search-form button:hover{
-    background-color: #fff;
-    color: #8d99af;
+.main-button#matchMakingBtn:hover{
+    background-color: #8CBDB9;
+    color: #2D3E4E;
+    transition: 1s;
+}
+.main-button#matchMakingBtn i{
+    background-color: #2D3E4E;
+    color: #8CBDB9;
+    transition: 1s;
+
+}
+.main-button#matchMakingBtn i:hover{
+    background-color: #8CBDB9;
+    color: #2D3E4E;
     transition: 1s;
 }
 
@@ -59,6 +75,7 @@ form#search-form .row{
     background-position-x: center;
 }
 
+
 .form-container>form{
     margin-top: 50px;
     display: flex;
@@ -67,12 +84,12 @@ form#search-form .row{
     padding: 30px;
 
 }
-/* A optimiser */
+/* A optimiser (très bien pour le register form, pas vraiment pour les autres*/
 .form-container>form>div>div>div>label, .form-container>form>div>div>div>input{
     margin-bottom: 10px;
 }
 
-.form-container>form>div>div>div>input{
+.form-container>form>div>div>div>input, .form-container>form>div>div>div>input:focus{
     border-width: 0px 0px 1px 0px;
     background-color: transparent;
     color: #2D3E4E ;
@@ -83,6 +100,23 @@ form#search-form .row{
     display: flex;
     flex-direction: column;
     justify-content: start;
+}
+
+/*Style du formulaire de connexion*/
+.mainContainer.loginMain{
+    background-image: url("../images/cat-stroke.jpg");
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position-y: 30%;
+    background-position-x: center;
+}
+
+.loginForm>input, .loginForm>input:focus{
+    border-width: 0px 0px 1px 0px;
+    background-color: transparent;
+    color: #2D3E4E ;
+    margin-bottom: 30px;
 }
 
 /*Agree Terms positioning*/
@@ -361,5 +395,25 @@ div.content {
     color: #2D3E4E !important;
     padding: 0px 20px 40px 0px;
 
+}
+
+.profile-img{
+
+    margin-top: 50px;
+}
+
+.profile-head{
+    margin-top: 50px;
+
+}
+
+.profile-edit-btn{
+
+    margin-top: 50px;
+}
+
+.nav-item{
+
+    margin-top: 90px;
 }
 
