@@ -6,25 +6,55 @@
     {% for flashError in app.flashes('verify_email_error') %}
         <div class="alert alert-danger" role="alert">{{ flashError }}</div>
     {% endfor %}
+    <div class="mainContainer registerMain">
+        <h1 style="margin-top: 100px" class="text-center">Inscription</h1>
+        <div class="form-container mx-auto w-50">
+            {{ form_start(registrationForm) }}
+            <div class="row">
+                <div class="col">
+                    {{ form_row(registrationForm.username) }}
+                </div>
+                <div class="col">
+                    {{ form_row(registrationForm.email) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">{{ form_row(registrationForm.plainPassword, {
+                        label: 'Password'
+                    }) }}</div>
+                <div class="col">
+                    {{ form_row(registrationForm.nom) }}
+                    {{ form_row(registrationForm.prenom) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    {{ form_row(registrationForm.age) }}
+                    {{ form_row(registrationForm.roles, {'attr': {'class': 'form-select'} }) }}
+                </div>
+                <div class="col">
+                    {{ form_row(registrationForm.adresse) }}
+                    {{ form_row(registrationForm.pays) }}
+                    {{ form_row(registrationForm.ville) }}
+                    {{ form_row(registrationForm.city) }}
+                </div>
+            </div>
 
-    <h1 style="margin-top: 50px">Register</h1>
+            <div class="row w-75 mx-auto justify-content-center">
+                <div class="agreeTerms">
+                    Veuillez accepter nos &nbsp;
+                    <a href="{{ path('cgv') }}" target="_blank">
+                        conditions d'utilisation &nbsp;
+                    </a>
+                    {{ form_row(registrationForm.agreeTerms) }}
+                </div><button type="submit" class="btn btn-dark align-self-lg-center w-50">S'inscrire</button>
+            </div>
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.username) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.nom) }}
-        {{ form_row(registrationForm.prenom) }}
-        {{ form_row(registrationForm.age) }}
-        {{ form_row(registrationForm.pays) }}
-        {{ form_row(registrationForm.adresse) }}
-        {{ form_row(registrationForm.ville) }}
-        {{ form_row(registrationForm.city) }}
-        {{ form_row(registrationForm.roles) }}
-        {{ form_row(registrationForm.agreeTerms) }}
 
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+            {{ form_end(registrationForm) }}
+        </div>
+    </div>
+
+
+
 {% endblock %}

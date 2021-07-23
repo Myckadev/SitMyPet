@@ -8,6 +8,10 @@
 .main-banner{
     height: 1100px;
 }
+
+.mainContainer{
+    padding: 120px 0px;
+}
 /*Style du formulaire de recherche*/
 
 
@@ -45,8 +49,61 @@ form#search-form .row{
     height: 90px;
 }
 
+/*Style formulaire inscription*/
+.mainContainer.registerMain{
+    background-image: url("../images/handshake-dog.jpg") ;
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position-y: 30%;
+    background-position-x: center;
+}
 
+.form-container>form{
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(255,255,255, 0.5) ;
+    padding: 30px;
 
+}
+/* A optimiser */
+.form-container>form>div>div>div>label, .form-container>form>div>div>div>input{
+    margin-bottom: 10px;
+}
+
+.form-container>form>div>div>div>input{
+    border-width: 0px 0px 1px 0px;
+    background-color: transparent;
+    color: #2D3E4E ;
+    margin-bottom: 30px;
+}
+
+.form-container>form>div>div>div{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+}
+
+/*Agree Terms positioning*/
+.agreeTerms{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+/*No more arrows form input type number*/
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
 /*Fin du style du body*/
 
 body {
