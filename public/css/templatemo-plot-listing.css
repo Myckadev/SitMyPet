@@ -282,18 +282,18 @@ header
 
 .header-area .main-nav a.logo {
 
-  background-image: url('../images/logoTitre.png');
+  background-image: url('../images/logoTitrea.png');
   background-repeat: no-repeat;
   width: 260px;
-  height: 70px;
+  height: 80px;
   display: inline-block;
   margin-top: 10px;
 }
 
 .background-header .main-nav a.logo {
-  background-image: url(../images/logoTitre.png);
+  background-image: url('../images/logoTitreb2.png');
   width: 260px;
-  height: 70px;
+  height: 80px;
   display: inline-block;
   margin-top: 0px;
   -webkit-transition: all 0.3s ease 0s;
@@ -733,10 +733,10 @@ header
 
 
 
-/* 
+/*
 ---------------------------------------------
 Banner Style
---------------------------------------------- 
+---------------------------------------------
 */
 
 .main-banner {
@@ -999,7 +999,7 @@ Popular Categories
 
 /*
 ---------------------------------------------
-Recent Listing 
+Recent Listing
 ---------------------------------------------
 */
 
@@ -1162,6 +1162,7 @@ footer {
   background-color: #8CBDB9;
 }
 
+
 footer h4 {
   font-size: 18px;
   font-weight: 700;
@@ -1220,10 +1221,10 @@ footer .sub-footer {
 
 
 
-/* 
+/*
 ---------------------------------------------
 contact
---------------------------------------------- 
+---------------------------------------------
 */
 
 .contact-page {
@@ -1353,10 +1354,10 @@ form#contact button:hover {
 }
 
 
-/* 
+/*
 ---------------------------------------------
 Page Heading
---------------------------------------------- 
+---------------------------------------------
 */
 
 .page-heading {
@@ -1592,10 +1593,10 @@ Category Post
 
 
 
-/* 
+/*
 ---------------------------------------------
 Listing Page
---------------------------------------------- 
+---------------------------------------------
 */
 
 
@@ -1823,10 +1824,10 @@ Listing Page
 
 
 
-/* 
+/*
 ---------------------------------------------
 Pre Loader
---------------------------------------------- 
+---------------------------------------------
 */
 
 .js-preloader {
@@ -1924,10 +1925,10 @@ Pre Loader
 }
 
 
-/* 
+/*
 ---------------------------------------------
 responsive
---------------------------------------------- 
+---------------------------------------------
 */
 
 @media (max-width: 1200px) {
@@ -2095,6 +2096,10 @@ responsive
   .category-post .icon {
     transform: translateX(-22px);
   }
+
+
+
+
 
 }
 

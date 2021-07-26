@@ -2,8 +2,6 @@
 
 {% block title %}Profil!{% endblock %}
 
-
-
 {% block body %}
     <div class="mainContainer">
         <div class="container emp-profile">
@@ -11,7 +9,7 @@
                 <div class="row">
                     <div class="col-md-2">
                         <div class="profile-img">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog"
+                            <img style="max-width: 150px" src="{{ asset('upload/') }}{{ app.user.profilPicture }}"
                                  alt=""/>
                         </div>
                     </div>
@@ -37,7 +35,7 @@
                         </div>
                     </div>
                     <div class="col-md-2">
-                        <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile"/>
+                        <a href="{{ path('app_profil_settings', {'id': app.user.id}) }}" class="profile-edit-btn btn btn-primary">Edit Profile</a>
                     </div>
                 </div>
                 <div class="row">
@@ -115,8 +113,6 @@
                                         <p>Expert</p>
                                     </div>
                                 </div>
-
-
                             </div>
                         </div>
                     </div>

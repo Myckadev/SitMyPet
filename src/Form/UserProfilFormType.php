@@ -51,13 +51,14 @@ class UserProfilFormType extends AbstractType
             ->add('ville')
             ->add('city')
             ->add('roles', ChoiceType::class ,[
-                'required' => true,
                 'choices' => [
                     'Sitter' => "ROLE_SITTER",
                     'Master' => "ROLE_MASTER"
                 ]
             ])
-            ->add('editPicture', FileType::class)
+            ->add('editPicture', FileType::class,[
+                'required' => false
+            ])
             ->add('description')
             ->add('rayon_action')
             ->add('tarif')
