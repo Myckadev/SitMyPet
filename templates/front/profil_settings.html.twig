@@ -1,47 +1,58 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Editeur de profil{% endblock %}
 
 {% block body %}
-    <div class="mainContainer">
+    <div>
         {% for flashError in app.flashes('verify_email_error') %}
             <div class="alert alert-danger" role="alert">{{ flashError }}</div>
         {% endfor %}
-        <div class="mainContainer registerMain">
-            <h1 style="margin-top: 100px" class="text-center">Inscription</h1>
-            <div class="form-container mx-auto w-50">
+        <div class="mainContainer modifProfilMain">
+            <h1 style="margin-top: 100px" class="text-center">Modifier mon profil</h1>
+            <div class="form-container mx-auto">
                 {{ form_start(profilEditForm) }}
                 <div class="row">
                     <div class="col">
                         {{ form_row(profilEditForm.username) }}
-                    </div>
-                    <div class="col">
                         {{ form_row(profilEditForm.email) }}
                     </div>
-                </div>
-                <div class="row">
                     <div class="col">
                         {{ form_row(profilEditForm.nom) }}
                         {{ form_row(profilEditForm.prenom) }}
+                        {{ form_row(profilEditForm.age) }}
                     </div>
                 </div>
                 <div class="row">
                     <div class="col">
-                        {{ form_row(profilEditForm.age) }}
-                        {{ form_row(profilEditForm.roles, {'attr': {'class': 'form-select'} }) }}
-                    </div>
-                    <div class="col">
                         {{ form_row(profilEditForm.adresse) }}
                         {{ form_row(profilEditForm.pays) }}
+                    </div>
+                    <div class="col">
                         {{ form_row(profilEditForm.ville) }}
                         {{ form_row(profilEditForm.city) }}
                     </div>
                 </div>
-
-                <div class="row w-75 mx-auto justify-content-center">
-                    <button type="submit" class="btn btn-dark align-self-lg-center w-50">Modifier</button>
+                <div class="row">
+                    <div class="col">{{ form_row(profilEditForm.roles, {'attr': {'class': 'form-select'} }) }}</div>
+                    <div class="col">{{ form_row(profilEditForm.rayon_action) }}</div>
                 </div>
-                {{ form_end(profilEditForm) }}
+                <div class="my-2 row">
+                    <div class="col">
+                        {{ form_row(profilEditForm.editPicture) }}
+                        {{ form_row(profilEditForm.description) }}
+                        {% if  is_granted("ROLE_SITTER") %}
+                            {{ form_row(profilEditForm.tarif) }}
+                        {% else %}
+                            {{ form_widget(profilEditForm.tarif, {'attr':{'class': 'hidden-row'}}, {'label':'Tarif'}) }}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row w-75 mx-auto my-2 justify-content-center">
+                    <button type="submit" class="btn btn-dark align-self-lg-center w-50">Modifier</button>
+                    {{ form_end(profilEditForm) }}
+
+
+                </div>
             </div>
         </div>
     </div>

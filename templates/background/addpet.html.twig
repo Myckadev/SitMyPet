@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+    {#    {% for flashError in app.flashes('verify_email_error') %}#}
+    {#        <div class="alert alert-danger" role="alert">{{ flashError }}</div>#}
+    {#    {% endfor %}#}
+    <div class="mainContainer registerMain">
+    <div class="header-text">
+        <h1 class="text-center">Ajouter un Animal</h1>
+    </div>
+    <div class="form-container mx-auto">
+        {{ form_start(petForm) }}
+        <div class="row">
+            <div class="col">
+
+            </div>
+            <div class="row w-75 mx-auto justify-content-center">
+                <button type="submit" class="btn btn-dark align-self-lg-center w-50">Ajouter</button>
+            </div>
+
+
+            {{ form_end(petForm) }}
+        </div>
+    </div>
+{% endblock %}

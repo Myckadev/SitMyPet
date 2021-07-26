@@ -2,14 +2,23 @@
 
 namespace App\Controller;
 
+use App\Entity\Pet;
 use App\Entity\User;
+use App\Form\ContactFormType;
+use App\Form\PetFormType;
 use App\Form\UserProfilFormType;
+use App\Security\EmailVerifier;
+use App\Service\MailGenerator;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\Annotation\Route;
 
 class FrontController extends AbstractController
@@ -104,6 +113,85 @@ class FrontController extends AbstractController
     public function cgv()
     {
         return $this->render('front/cgv.html.twig');
+    }
+
+    /**
+     * @Route("/contact", name="contact")
+     * @throws TransportExceptionInterface
+     */
+    public function contact(Request $request, MailGenerator $mailGenerator, MailerInterface $mailer){
+
+        $form = $this->createForm(ContactFormType::class);
+        $form->handleRequest($request);
+
+        if($form->isValid() && $form->isSubmitted()){
+
+            dd($form->getData());
+            $mail = $form['mail']->getData();
+            $subject = $form['need']->getData();
+            $message = $form['message']->getData();
+            $nom = $form['nom']->getData();
+            $prenom = $form['prenom']->getData();
+
+            $mailGenerator->sendMail(
+                $mailer,
+                'majdev767@gmail.com',
+                "$mail",
+                "$subject",
+                "$message",
+                ""
+            );
+        }
+
+        return $this->render('contact/contact.html.twig', [
+            'contactForm'=>$form->createView()
+        ]);
+    }
+
+
+    /**
+     * @Route("/addPet/{id}", name="addPet")
+     */
+    public function addPet(User $user, Request $request, EntityManagerInterface  $manager)
+    {
+
+        $form=$this->createForm(PetFormType::class);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+            $pet = new Pet();
+            $pet->setPicture("default.png");
+            $pet->addOwner($user);
+            $pet->setNickname($form->get('nickname')->getData());
+            //$pet->setNickname($form['nickname']->getData());
+            $pet->setDescription($form->get('description')->getData());
+            $pet->setAge($form->get('age')->getData());
+            $pet->setType($form->get('type')->getData());
+
+            $picture=$form->get('picture')->getData();
+
+            if($picture){
+                $namePicture = date('YmdHis').uniqid().$picture->getClientOriginalName();
+
+                $picture->move($this->getParameter('upload_directory'), $namePicture);
+//                if($namePicture !== 'default.png'){
+//                    unlink($this->getParameter('upload_directory').'/'.$pet->getPicture());
+//                }
+                $pet->setPicture($picture);
+            }
+
+
+            $manager->persist($pet);
+            $manager->flush();
+
+            $this->addFlash('success', "Votre animal a bien été ajouté");
+            $this->redirectToRoute('app_profil');
+
+
+        }
+        return $this->render('background/addPet.html.twig', [
+            'petForm'=>$form->createView()
+        ]);
     }
 
 }

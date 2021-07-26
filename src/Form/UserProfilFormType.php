@@ -57,7 +57,8 @@ class UserProfilFormType extends AbstractType
                 ]
             ])
             ->add('editPicture', FileType::class,[
-                'required' => false
+                'required' => false,
+                'label'=> 'Changer la photo de profil'
             ])
             ->add('description')
             ->add('rayon_action')

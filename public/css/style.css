@@ -4,6 +4,14 @@
 /* Fin du style du header */
 
 /* Style du body*/
+/*Couleurs police*/
+/*h1,h2,h3,h4,h5,h6,p {*/
+/*    color: #2D3E4E;*/
+/*}*/
+
+.top-text {
+    color: #E8ECEB;
+}
 /* Première section */
 .main-banner{
     height: 1100px;
@@ -65,6 +73,11 @@ form#search-form .row{
     height: 90px;
 }
 
+/*style formulaires*/
+.form-container{
+    max-width: 50%;
+}
+
 /*Style formulaire inscription*/
 .mainContainer.registerMain{
     background-image: url("../images/handshake-dog.jpg") ;
@@ -76,7 +89,7 @@ form#search-form .row{
 }
 
 
-.form-container>form{
+.form-container{
     margin-top: 50px;
     display: flex;
     flex-direction: column;
@@ -117,6 +130,39 @@ form#search-form .row{
     background-color: transparent;
     color: #2D3E4E ;
     margin-bottom: 30px;
+}
+/*Style formulaire Modif Profil*/
+.mainContainer.modifProfilMain{
+    background-image: url("../images/owner-petting-dog.jpg") ;
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position-y: 30%;
+    background-position-x: center;
+}
+/*Cache conditionnel du field tarif*/
+.hidden-row{
+    display:none;
+}
+
+/*Style formulaire de contact*/
+
+.mainContainer.contactMain {
+    background-image: url("../images/owner-laptop.jpg") ;
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position-y: 30%;
+    background-position-x: center;
+}
+
+.contactMessage textarea{
+    background: transparent;
+    border-width: 0px 0px 1px 0px;
+}
+
+.contactInfo {
+    font-size: 18px;
 }
 
 /*Agree Terms positioning*/
@@ -417,3 +463,123 @@ div.content {
     margin-top: 90px;
 }
 
+/*Responsive*/
+@media  (max-width: 767px) {
+
+    .main-banner{
+        height: 100em;
+    }
+
+    .form-container{
+        max-width: 90%;
+    }
+
+    form#search-form>.search-row{
+        height: 40em;
+    }
+
+    form#search-form>.search-row>*{
+        margin: 10px 0px;
+    }
+}
+
+.profile-img{
+
+    margin-top: 50px;
+}
+
+.profile-head{
+    margin-top: 50px;
+
+}
+
+.profile-edit-btn{
+
+    margin-top: 50px;
+}
+
+.nav-item{
+
+    margin-top: 90px;
+}
+
+.pseudo{
+    margin-top: 50px;
+
+}
+
+.profilInfo{
+
+    margin-top: 30px;
+    margin-bottom: 15px;
+    padding: 5px 10px;
+
+}
+
+.profilInfoInt{
+
+    margin-top: 10px;
+    margin-bottom: 15px;
+    padding: 5px 5px;
+
+}
+
+
+
+
+
+.description{
+
+    padding: 20px 30px;
+    background-color: #8CBDB9;
+    border-radius: 10px;
+    color: #2D3E4E;
+    margin-right: 10px;
+
+
+}
+
+.backgroundProfile{
+    background-color: #2D3E4E;
+    border-radius: 50px;
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position-y: 10%;
+    background-position-x: center;
+    margin-top: 70px;
+    padding: 40px 150px;
+
+
+
+}
+
+.buttonProfile{
+
+    background-color: #2D3E4E;
+    border-radius: 20px;
+}
+
+.addPet{
+    max-width: 150px;
+    margin-top: 80px;
+
+    width: 100px;
+    height: 100px;
+    position: relative;
+    overflow: hidden;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    border-radius: 50%;
+
+}
+
+
+
+.addPetPlus {
+    max-width: 150px;
+    margin-top: 80px;
+    font-size: 55px;
+}

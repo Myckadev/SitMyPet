@@ -233,7 +233,7 @@ header
 */
 
 .background-header {
-  background-color: #fff!important;
+  background-color: #E8ECEB!important;
   height: 80px!important;
   position: fixed!important;
   top: 0px;
@@ -309,7 +309,6 @@ header
 .header-area .main-nav .nav {
   float: right;
   margin-top: 30px;
-  /*Faire remonter le logo au scroll*/
   margin-right: 0px;
   background-color: transparent;
   -webkit-transition: all 0.3s ease 0s;
@@ -355,20 +354,31 @@ header
   background-color: #2D3E4E;
   color: #8CBDB9 !important;
 }
+.header-area .main-nav .nav li:nth-last-child(-n+2) .main-white-button a i {
+  background-color: #8CBDB9;
+  color:  #2D3E4E !important;
+}
 
 .background-header .main-nav .nav li:nth-last-child(-n+2) .main-white-button a i {
   background-color: #2D3E4E;
   color: #8CBDB9 !important;
 }
 
-.header-area .main-nav .nav li:nth-last-child(-n+2) a:hover,
-.header-area .main-nav .nav li:nth-last-child(-n+2) a.active {
+.header-area .main-nav .nav li:nth-last-child(-n+2) .main-white-button a:hover,
+.header-area .main-nav .nav li:nth-last-child(-n+2) .main-white-button a.active {
+  color: #8CBDB9 !important;
+  background-color: #2D3E4E;
+}
+
+.background-header .main-nav .nav li:nth-last-child(-n+2) .main-white-button a:hover,
+.background-header .main-nav .nav li:nth-last-child(-n+2) .main-white-button a.active {
   color: #2D3E4E !important;
+  background-color: #8CBDB9;
 }
 
 .header-area .main-nav .nav li a {
   display: block;
-  font-weight: 500;
+  font-weight: 550;
   font-size: 14px;
   color: #8CBDB9;
   text-transform: uppercase;
@@ -612,7 +622,7 @@ header
 @media (max-width: 992px) {
   .header-area .main-nav .nav li:last-child  ,
   .background-header .main-nav .nav li:last-child {
-    display: none;
+    /*display: none;*/
   }
   .header-area .main-nav .nav li:nth-child(6),
   .background-header .main-nav .nav li:nth-child(6) {
@@ -671,7 +681,7 @@ header
     border-top: 1px solid #eee;
   }
   .header-area.header-sticky .nav {
-    margin-top: 100px;
+    /*margin-top: 100px;*/
   }
   .header-area .main-nav .nav li {
     width: 100%;
@@ -1166,7 +1176,7 @@ footer {
 footer h4 {
   font-size: 18px;
   font-weight: 700;
-  color: #E09E50;
+  color: #2D3E4E;
   margin-bottom: 30px;
 }
 
@@ -2083,9 +2093,8 @@ responsive
     color: transparent;
   }
   .header-area .main-nav a.logo {
-    background-image: url('../images/logosm.png');
+    background-image: url('../images/LogoTitrea.png');
     background-repeat: no-repeat;
-    float: left;
   }
   .header-area .logo {
     margin-left: 0px;
@@ -2096,10 +2105,6 @@ responsive
   .category-post .icon {
     transform: translateX(-22px);
   }
-
-
-
-
 
 }
 
