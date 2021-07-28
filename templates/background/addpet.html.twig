@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Ajout de pet{% endblock %}
 
 {% block body %}
     {#    {% for flashError in app.flashes('verify_email_error') %}#}
     {#        <div class="alert alert-danger" role="alert">{{ flashError }}</div>#}
     {#    {% endfor %}#}
-    <div class="mainContainer registerMain">
+    <div class="mainContainer addPetMain">
     <div class="header-text">
         <h1 class="text-center">Ajouter un Animal</h1>
     </div>
@@ -14,14 +14,29 @@
         {{ form_start(petForm) }}
         <div class="row">
             <div class="col">
-
+                {{ form_row(petForm.nickname) }}
             </div>
-            <div class="row w-75 mx-auto justify-content-center">
-                <button type="submit" class="btn btn-dark align-self-lg-center w-50">Ajouter</button>
+            <div class="col">
+                {{ form_row(petForm.age) }}
             </div>
-
-
-            {{ form_end(petForm) }}
         </div>
+        <div class="row my-3">
+            {{ form_row(petForm.description) }}
+        </div>
+
+        <div class="row">
+            <div class="col">
+                {{ form_row(petForm.picture) }}
+            </div><div class="col">
+                {{ form_row(petForm.type, {'attr':{'class':'form-select'}}) }}
+            </div>
+        </div>
+        <div class="row w-75 mx-auto justify-content-center">
+            <button type="submit" class="btn btn-dark align-self-lg-center w-50">Ajouter</button>
+        </div>
+
+
+        {{ form_end(petForm) }}
+
     </div>
 {% endblock %}

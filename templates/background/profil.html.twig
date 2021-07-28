@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Profil!{% endblock %}
+{% block title %}Profil !{% endblock %}
 
 {% block body %}
-    <div class="mainContainer">
+    <div class="mainContainer profilContainer">
         <div class="container emp-profile backgroundProfile">
             <form method="post">
                 <div class="row">
@@ -16,7 +16,7 @@
                         <div class="clas row">
                             <div class="offset-3 col-md-9">
                                 <a href="{{ path('app_profil_settings', {'id': app.user.id}) }}"
-                                   class="profile-edit-btn btn btn-primary">Edit Profile</a>
+                                   class="profile-edit-btn btn btn-dark">Edit Profile</a>
                             </div>
                         </div>
                     </div>
@@ -28,7 +28,7 @@
                             <h5 class="profilInfo">
                                 <i class="fa fa-birthday-cake"></i> : {{ app.user.age }} ans
                             </h5>
-                            <H5 class="profile-rating  profilInfo">Note : <span> {{ app.user.note }}</span>/10</H5>
+                            <H5 class="profile-rating  profilInfo"><i class="fa fa-star"></i> : <span> {{ app.user.note }}</span>/10</H5>
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
                                 <li class="nav-item">
                                     <a class="nav-link active buttonProfile"
@@ -38,7 +38,7 @@
                                 <li class="nav-item">
                                     <a class="nav-link  buttonProfile"
                                        id="profile-tab" data-toggle="tab" href="#profile" role="tab"
-                                       aria-controls="profile" aria-selected="false"><h4><i class="fa fa-bitcoin"></i></h4></a>
+                                       aria-controls="profile" aria-selected="false"><h4><i class="fa fa-euro"></i></h4></a>
                                 </li>
                             </ul>
                         </div>
@@ -81,7 +81,7 @@
                                     <div class="col-lg-2">
                                         <h5><i class="fa fa-home fa-2x"></i></h5>
                                     </div>
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-5">
                                         <h5>{{ app.user.adresse }} {{ app.user.city }} {{ app.user.ville }}</h5>
                                     </div>
                                     <div class="row  profilInfoInt">
@@ -98,7 +98,7 @@
                                                       alt=""/></div>
                                         </div>
                                         <div class="col-lg-3">
-                                            <div class="addPetPlus"><a href="#"><i class="fa fa-plus"></i></a></div>
+                                            <div class="addPetPlus"><a href="#"><span>+</span></a></div>
                                         </div>
                                     </div>
 
@@ -141,6 +141,8 @@
 
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="{{ asset('js/custom.js') }}">
+        </script>
     {% endblock %}
 
 {% endblock %}

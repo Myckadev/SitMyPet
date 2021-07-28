@@ -150,7 +150,7 @@ class FrontController extends AbstractController
 
 
     /**
-     * @Route("/addPet/{id}", name="addPet")
+     * @Route("/addpet/{id}", name="addPet")
      */
     public function addPet(User $user, Request $request, EntityManagerInterface  $manager)
     {
@@ -161,9 +161,8 @@ class FrontController extends AbstractController
         if($form->isSubmitted() && $form->isValid()) {
             $pet = new Pet();
             $pet->setPicture("default.png");
-            $pet->addOwner($user);
+            $pet->setUser($user);
             $pet->setNickname($form->get('nickname')->getData());
-            //$pet->setNickname($form['nickname']->getData());
             $pet->setDescription($form->get('description')->getData());
             $pet->setAge($form->get('age')->getData());
             $pet->setType($form->get('type')->getData());
@@ -174,9 +173,9 @@ class FrontController extends AbstractController
                 $namePicture = date('YmdHis').uniqid().$picture->getClientOriginalName();
 
                 $picture->move($this->getParameter('upload_directory'), $namePicture);
-//                if($namePicture !== 'default.png'){
-//                    unlink($this->getParameter('upload_directory').'/'.$pet->getPicture());
-//                }
+                if($namePicture !== 'default.png'){
+                    unlink($this->getParameter('upload_directory').'/'.$pet->getPicture());
+                }
                 $pet->setPicture($picture);
             }
 
@@ -185,7 +184,7 @@ class FrontController extends AbstractController
             $manager->flush();
 
             $this->addFlash('success', "Votre animal a bien été ajouté");
-            $this->redirectToRoute('app_profil');
+            return $this->redirectToRoute('app_profil');
 
 
         }

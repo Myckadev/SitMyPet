@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -124,9 +126,15 @@ class User implements UserInterface, \Serializable
     private $isVerified = false;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Pet::class, inversedBy="owner")
+     * @ORM\OneToMany(targetEntity=Pet::class, mappedBy="user")
      */
     private $animaux;
+
+    public function __construct()
+    {
+        $this->animaux = new ArrayCollection();
+    }
+
 
     public function getId(): ?int
     {
@@ -380,18 +388,6 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
-    public function getAnimaux(): ?Pet
-    {
-        return $this->animaux;
-    }
-
-    public function setAnimaux(?Pet $animaux): self
-    {
-        $this->animaux = $animaux;
-
-        return $this;
-    }
-
     public function serialize()
     {
         return serialize(array(
@@ -429,4 +425,36 @@ class User implements UserInterface, \Serializable
             $this->city
             ) = unserialize($data, array('allowed_classes' => false));
     }
+
+    /**
+     * @return Collection|Pet[]
+     */
+    public function getAnimaux(): Collection
+    {
+        return $this->animaux;
+    }
+
+    public function addAnimaux(Pet $animaux): self
+    {
+        if (!$this->animaux->contains($animaux)) {
+            $this->animaux[] = $animaux;
+            $animaux->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnimaux(Pet $animaux): self
+    {
+        if ($this->animaux->removeElement($animaux)) {
+            // set the owning side to null (unless already changed)
+            if ($animaux->getUser() === $this) {
+                $animaux->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+    
+
 }

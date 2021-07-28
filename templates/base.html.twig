@@ -10,10 +10,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap"
           rel="stylesheet">
+    <link rel="icon" href="{{ asset('images/favicon.ico') }}"/>
 
-    <title>SitMyPet</title>
+    <title>SitMyPet | {% block title %}{% endblock %}</title>
 
-    <title>{% block title %}Bienvenue !{% endblock %}</title>
 
     {% block stylesheets %}
         <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" />
@@ -55,10 +55,16 @@
                                 </div>
                             </li>
                         {% else %}
-                            <li>
-                                <div class="main-white-button"><a href="{{ path('app_profil') }}"><i class="fa fa-user"></i> Profil </a>
-                                </div>
-                            </li>
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <li>
+                                    <div class="main-white-button"><a href="{{ path('admin')}}"><i class="fa fa-cogs"></i> Admin</a></div>
+                                </li>
+                            {% else %}
+                                <li>
+                                    <div class="main-white-button"><a href="{{ path('app_profil') }}"><i class="fa fa-user"></i> Profil </a>
+                                    </div>
+                                </li>
+                            {% endif %}
                             <li>
                                 <div class="main-white-button"><a href="{{ path('app_logout') }}"><i class="fa fa-sign-out"></i> Se déconnecter </a>
                                 </div>
@@ -85,7 +91,7 @@
             <div class="col-lg-3">
                 <div class="about">
                     <div class="logo">
-                        <img src="{{ asset('images/logoTitre.png') }}" alt="logo">
+                        <img src="{{ asset('images/LogoTitrea.png') }}" alt="logo">
                     </div>
                 </div>
             </div>
@@ -118,11 +124,11 @@
                 </div>
             </div>
             <div  class="col-lg-3" >
-                <div class="row">
-                    <h4>Réseaux Sociaux</h4>
-                    <a class="col-lg-2" href="#"><i class="fa fa-facebook fa-2x"></i></a>
-                    <a class="col-lg-3" href="#"><i class="fa fa-twitter fa-2x"></i></a>
-                    <a class="col-lg-3" href="#"><i class="fa fa-instagram fa-2x"></i></a>
+                <h4>Réseaux Sociaux</h4>
+                <div class="row social-icons">
+                    <a href="#"><i class="fa fa-facebook fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-twitter fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-instagram fa-2x"></i></a>
                 </div>
 
             </div>

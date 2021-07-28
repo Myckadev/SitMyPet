@@ -43,16 +43,19 @@ class Pet
      * @ORM\ManyToOne(targetEntity=PetType::class, inversedBy="pets")
      * @ORM\JoinColumn(nullable=false)
      */
-    private ?PetType $type;
+    private $type;
 
     /**
-     * @ORM\OneToMany(targetEntity=User::class, mappedBy="animaux")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="animaux")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $owner;
+    private $user;
+
+
 
     public function __construct()
     {
-        $this->owner = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -108,6 +111,7 @@ class Pet
         return $this;
     }
 
+
     public function getType(): ?PetType
     {
         return $this->type;
@@ -120,33 +124,16 @@ class Pet
         return $this;
     }
 
-    /**
-     * @return Collection|User[]
-     */
-    public function getOwner(): Collection
+    public function getUser(): ?User
     {
-        return $this->owner;
+        return $this->user;
     }
 
-    public function addOwner(User $owner): self
+    public function setUser(?User $user): self
     {
-        if (!$this->owner->contains($owner)) {
-            $this->owner[] = $owner;
-            $owner->setAnimaux($this);
-        }
+        $this->user = $user;
 
         return $this;
     }
 
-    public function removeOwner(User $owner): self
-    {
-        if ($this->owner->removeElement($owner)) {
-            // set the owning side to null (unless already changed)
-            if ($owner->getAnimaux() === $this) {
-                $owner->setAnimaux(null);
-            }
-        }
-
-        return $this;
-    }
 }

@@ -9,6 +9,80 @@
 /*    color: #2D3E4E;*/
 /*}*/
 
+/*Style page profil*/
+
+.mainContainer.profilContainer{
+    background: rgb(232,236,235);
+    background: linear-gradient(180deg, rgba(232,236,235,1) 0%, rgba(224,158,80,1) 40%);
+}
+
+.profilInfo>*{
+    color: #E8ECEB;
+}
+
+.profile-rating>.fa-star{
+    color: yellow;
+}
+
+.profilInfoInt {
+    color: #E8ECEB;
+    align-items: center;
+}
+
+.profilInfoInt>div>h5 {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+
+}
+
+.profilInfoInt i{
+    text-align: center;
+    align-self: center;
+}
+
+
+
+#home-tab i::before, #profile-tab i::before{
+    color: #8CBDB9;
+}
+
+#myTabContent
+
+    /* Bouton d'ajout de pet */
+#myTabContent *{
+    color: #E8ECEB;
+}
+
+#myTabContent .addPetPlus span{
+    color: #8CBDB9;
+    transition: 0.5s;
+}
+
+#myTabContent .addPetPlus a{
+    width: 100px;
+    height: 100px;
+    border: none;
+    padding: 10px 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    border-radius: 50px;
+    transition: 0.5s;
+    background-color: #2D3E4E;
+}
+
+#myTabContent .addPetPlus:hover a{
+    color: #8CBDB9;
+    transition: 0.5s;
+    background-color: #8CBDB9;
+}
+#myTabContent .addPetPlus:hover a>span{
+    color: #2D3E4E;
+    transition: 0.5s;
+}
+
+
 .top-text {
     color: #E8ECEB;
 }
@@ -59,7 +133,7 @@ form#search-form select, form#search-form input, form#search-form input::placeho
     transition: 1s;
 
 }
-.main-button#matchMakingBtn i:hover{
+.main-button#matchMakingBtn:hover i{
     background-color: #8CBDB9;
     color: #2D3E4E;
     transition: 1s;
@@ -172,6 +246,57 @@ form#search-form .row{
     justify-content: center;
 }
 
+/*Style formulaire d'ajout d'animal*/
+.mainContainer.addPetMain {
+    background-image: url("../images/cat-in-arms.jpg") ;
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position-y: 30%;
+    background-position-x: center;
+    padding-top: 150px;
+    padding-bottom: 0px;
+}
+
+.addPetMain>.form-container{
+    margin-bottom: 150px;
+    padding: 30px 20px;
+}
+
+.addPetMain>.form-container > form > div > div > div {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    margin: 30px 0px;
+}
+
+.addPetMain>.form-container > form > div > div > div>label {
+    margin-right: 10px;
+}
+.addPetMain>.form-container > form > div > div >.required {
+    margin-right: 20px;
+}
+
+.addPetMain>.form-container input, .addPetMain>.form-container input:focus {
+    border-width: 0px 0px 1px 0px;
+    background-color: transparent;
+    color: #2D3E4E ;
+}
+
+#pet-form-description{
+    width: 100%;
+}
+.addPetMain>.form-container select, .addPetMain>.form-container select:focus {
+    border-width: 0px 0px 1px 0px;
+    color: #2D3E4E ;
+}
+/*Style Backoffice*/
+.backContainer {
+    background-color: rgba(255,255,255, 0.5) ;
+    padding: 30px;
+    margin-top: 100px;
+}
+
 /*No more arrows form input type number*/
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
@@ -196,26 +321,68 @@ body {
     background-image: url(../images/cat-sleeping.jpg);
     background-attachment: fixed;
 }
+/*style Panel admin*/
+.panel-topbar{
+    background-color: #E8ECEB;
+}
+
+.panel-topbar .top-bar-dropdown{
+    margin-right: 120px !important;
+}
+
+.panel-topbar *{
+    color: #2D3E4E;
+}
+
+.panel-body{
+    background: rgb(232,236,235);
+    background: linear-gradient(180deg, rgba(232,236,235,1) 0%, rgba(45,62,78,1) 59%);
+    background-attachment: fixed;
+}
+
+.panel-body a {
+    font-family: Montserrat;
+}
+
+.panel-body i{
+    font-family: FontAwesome;
+}
 
 .sidebar {
-    margin: 0;
-    padding: 0;
-    width: 200px;
-    background-color: blue;
-    height: 100%;
+    margin-top: 100px;
+    padding: 30px 10px;
+    width: 230px;
+    background-color: #8CBDB9;
+    /*height: 100%;*/
+    height: 70%;
     overflow: auto;
     position: absolute;
+    border-radius: 5px;
+}
+
+.sidebar .nav-item{
+    margin-top: 60px;
 }
 
 .sidebar a {
     display: block;
-    color: black;
+    color: #8CBDB9;
+    background-color: #2D3E4E;
+    border: 1px #8CBDB9 solid;
+    border-radius: 5px;
     padding: 16px;
     text-decoration: none;
 }
 
 .sidebar a:hover:not(.active) {
-    color: dodgerblue;
+    color: #2D3E4E;
+    background-color: #8CBDB9;
+    border: 1px #2D3E4E solid;
+}
+
+.sidebar .dropdown-menu {
+    background-color: #2D3E4E;
+    padding: 5px;
 }
 
 div.content {
@@ -463,6 +630,17 @@ div.content {
     margin-top: 90px;
 }
 
+/*Style des icones des réseaux sociaux*/
+.social-icons{
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    width: 80%;
+}
+
+.social-icons>*{
+    width: 25%;
+}
 /*Responsive*/
 @media  (max-width: 767px) {
 
@@ -480,6 +658,23 @@ div.content {
 
     form#search-form>.search-row>*{
         margin: 10px 0px;
+    }
+
+    .addPetMain>.form-container>form {
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+    }
+    .addPetMain > .form-container > form > div > div > div {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin: 30px 0px;
+    }
+
+    .social-icons{
+        justify-content: center !important;
+        margin: 0 auto;
     }
 }
 
@@ -579,7 +774,18 @@ div.content {
 
 
 .addPetPlus {
-    max-width: 150px;
-    margin-top: 80px;
+    /*max-width: 150px;*/
+    margin-top: 85px;
     font-size: 55px;
+}
+
+.social-icons{
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    width: 80%;
+}
+
+.social-icons>*{
+    width: 25%;
 }

@@ -27,12 +27,13 @@ class PetType
     /**
      * @ORM\OneToMany(targetEntity=Pet::class, mappedBy="type")
      */
-    private ArrayCollection $pets;
+    private $pets;
 
     public function __construct()
     {
         $this->pets = new ArrayCollection();
     }
+
 
     public function getId(): ?int
     {
@@ -80,4 +81,5 @@ class PetType
 
         return $this;
     }
+
 }

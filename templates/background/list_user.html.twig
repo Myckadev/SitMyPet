@@ -1,0 +1,68 @@
+{% extends 'base_back.html.twig' %}
+
+{% block body %}
+
+    <div class="mainContainer backContainer">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Username</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Certification</th>
+                <th>Action</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.nom }}</td>
+                    <td>{{ user.prenom }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>
+                        {% if user.roles[0] =='ROLE_ADMIN' %}
+                            <p class="text-center">Admin</p>
+                        {% elseif user.roles[0] == 'ROLE_SITTER' %}
+                            <p class="text-center">Sitter</p>
+                        {% else %}
+                            <p class="text-center">Master</p>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if user.roles[0] == 'ROLE_SITTER' %}
+                            {% if user.sitter_verifie %}
+                                <a href="{{ path('change_verify', {'id':user.id}) }}" class="btn btn primary"><i class="fa fa-check"></i> Certif on</a>
+                            {% else %}
+                                <a href="{{ path('change_verify', {'id':user.id}) }}" class="btn btn-secondary "><i class="fa fa-check"></i> Certif off</a>
+                            {% endif %}
+                        {% else %}
+                            <p>N/A</p>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if user.roles[0] != 'ROLE_ADMIN' %}
+                            <a href="{{ path('promote_user', {'id':user.id}) }}" class="btn btn-dark">Promouvoir</a>
+
+
+                        {% else %}
+                            <div class="d-flex flex-column">
+                                <a href="{{ path('demote_user', {'id':user.id, 'role':'master'}) }}" class="btn btn-dark btn-sm mb-1">Destituer en Master</a>
+                                <a href="{{ path('demote_user', {'id':user.id, 'role':'sitter'}) }}" class="btn btn-dark btn-sm">Destituer en Sitter</a>
+                            </div>
+
+                        {% endif %}
+                    </td>
+                    <td><a href="{{ path('delete_user', {'id':user.id}) }}" class="btn btn-danger">Supprimer</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}
