@@ -63,7 +63,6 @@ class UserProfilFormType extends AbstractType
             ->add('description')
             ->add('rayon_action')
             ->add('tarif')
-            ->add('animaux')
         ;
         $builder->get('roles')
             ->addModelTransformer(new CallbackTransformer(
