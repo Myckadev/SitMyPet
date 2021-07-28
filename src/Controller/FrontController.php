@@ -78,9 +78,6 @@ class FrontController extends AbstractController
                 $namePicture = date('YmdHis').uniqid().$picture->getClientOriginalName();
 
                 $picture->move($this->getParameter('upload_directory'), $namePicture);
-                if($namePicture !== 'default.png'){
-                    unlink($this->getParameter('upload_directory').'/'.$user->getProfilPicture());
-                }
                 $user->setProfilPicture($namePicture);
             }
 
@@ -173,10 +170,7 @@ class FrontController extends AbstractController
                 $namePicture = date('YmdHis').uniqid().$picture->getClientOriginalName();
 
                 $picture->move($this->getParameter('upload_directory'), $namePicture);
-                if($namePicture !== 'default.png'){
-                    unlink($this->getParameter('upload_directory').'/'.$pet->getPicture());
-                }
-                $pet->setPicture($picture);
+                $pet->setPicture($namePicture);
             }
 
 

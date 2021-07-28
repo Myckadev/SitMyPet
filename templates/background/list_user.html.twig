@@ -36,7 +36,7 @@
                     </td>
                     <td>
                         {% if user.roles[0] == 'ROLE_SITTER' %}
-                            {% if user.sitter_verifie %}
+                            {% if user.getSitterVerifie %}
                                 <a href="{{ path('change_verify', {'id':user.id}) }}" class="btn btn primary"><i class="fa fa-check"></i> Certif on</a>
                             {% else %}
                                 <a href="{{ path('change_verify', {'id':user.id}) }}" class="btn btn-secondary "><i class="fa fa-check"></i> Certif off</a>

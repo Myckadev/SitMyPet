@@ -4,12 +4,13 @@ namespace App\Controller;
 
 use App\Entity\PetType;
 use App\Entity\User;
-use App\Form\PetTypeFOrmType;
+use App\Form\PetTypeFormType;
 use App\Repository\PetTypeRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class BackgroundController extends AbstractController
@@ -28,7 +29,7 @@ class BackgroundController extends AbstractController
     /**
      * @Route("admin/addtype", name="addtype")
      */
-    public function addType(PetTypeRepository $petTypeRepository, EntityManagerInterface $manager, \Symfony\Component\HttpFoundation\Request $request)
+    public function addType(PetTypeRepository $petTypeRepository, EntityManagerInterface $manager, Request $request)
     {
 
         $petType = new PetType();
@@ -51,9 +52,6 @@ class BackgroundController extends AbstractController
             return $this->redirectToRoute('addtype');
 
         endif;
-
-
-
 
         return $this->render("background/addtype.html.twig", [
 
@@ -121,6 +119,7 @@ class BackgroundController extends AbstractController
      */
     public function changeVerify(User $user, EntityManagerInterface $manager)
     {
+
         if($user->getSitterVerifie() == false){
             $user->setSitterVerifie(true);
         }else {
