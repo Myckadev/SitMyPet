@@ -28,6 +28,7 @@ class Pet
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private ?string $picture;
+    public $editPicture;
 
     /**
      * @ORM\Column(type="string", length=255)

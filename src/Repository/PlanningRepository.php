@@ -2,26 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\Pet;
+use App\Entity\Planning;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method Pet|null find($id, $lockMode = null, $lockVersion = null)
- * @method Pet|null findOneBy(array $criteria, array $orderBy = null)
- * @method Pet[]    findAll()
- * @method Pet[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
- * findBy(['user_id'=>user->getId(), orderBy = DESC, limit = 3])
+ * @method Planning|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Planning|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Planning[]    findAll()
+ * @method Planning[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class PetRepository extends ServiceEntityRepository
+class PlanningRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Pet::class);
+        parent::__construct($registry, Planning::class);
     }
 
     // /**
-    //  * @return Pet[] Returns an array of Pet objects
+    //  * @return Planning[] Returns an array of Planning objects
     //  */
     /*
     public function findByExampleField($value)
@@ -38,7 +37,7 @@ class PetRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Pet
+    public function findOneBySomeField($value): ?Planning
     {
         return $this->createQueryBuilder('p')
             ->andWhere('p.exampleField = :val')

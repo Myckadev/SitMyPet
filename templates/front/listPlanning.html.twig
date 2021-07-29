@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="mainContainer backContainer">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Titre</th>
+                <th>Date de début</th>
+                <th>Date de fin</th>
+                <th>Animaux souhaité</th>
+                <th >Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for planning in plannings %}
+                <tr>
+                    <td>{{ planning.title }}</td>
+                    <td>{{ planning.getDateStart | format_datetime('short', 'short', locale='fr')  }}</td>
+                    <td>{{ planning.getDateEnd | format_datetime('short', 'short', locale='fr')  }}</td>
+                    <td>
+                        {% for petType in planning.getPetType %}
+                            {{ petType.name }}<span>,</span>
+                        {% endfor %}
+                    </td>
+                    <td>
+                        <a href="{{ path('editPlanning', {'id': planning.getId}) }}" class="btn btn-dark">Éditer</a>
+                        <a href="{{ path('deletePlanning/{id}', {'id': planning.getId}) }}" class="btn btn-danger">Supprimer</a>
+                    </td>
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

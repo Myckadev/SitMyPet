@@ -297,6 +297,27 @@ form#search-form .row{
     margin-top: 100px;
 }
 
+/*Ajout Annonce*/
+
+.mainContainer.addAnnonceMain{
+    background-image: url("../images/owner-laptop.jpg");
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position-y: 30%;
+    background-position-x: center;
+}
+
+.mainContainer textarea{
+    background: transparent;
+    border-width: 0px 0px 1px 0px;
+}
+
+#annonce_form_date_start>select option, #annonce_form_date_end option {
+    background-color: transparent;
+}
+
+
 /*No more arrows form input type number*/
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
@@ -624,7 +645,22 @@ div.content {
 
     margin-top: 50px;
 }
+.pet-buttons{
+    /*position: relative;*/
+    /*top: -4%;*/
+    /*left: 10%;*/
+}
 
+.pet-col{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.pet-buttons a{
+    border-radius: 50px;
+}
 .nav-item{
 
     margin-top: 90px;

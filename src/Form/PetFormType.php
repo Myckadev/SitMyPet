@@ -17,26 +17,46 @@ class PetFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options){
 
-        $builder
-            ->add('nickname', TextType::class, [
-                'label'=>'Nom'
-            ])
-            ->add('picture', FileType::class, [
-                'label'=>'Photo'
-            ])
-            ->add('description', TextareaType::class)
-            ->add('age', NumberType::class)
-            ->add('type', EntityType::class,[
-                "class"=>PetType::class,
-                "choice_label"=>'name'
-            ])
-        ;
+        if($options['ajout']==true){
+
+            $builder
+                ->add('nickname', TextType::class, [
+                    'label'=>'Nom'
+                ])
+                ->add('picture', FileType::class, [
+                    'label'=>'Photo'
+                ])
+                ->add('description', TextareaType::class)
+                ->add('age', NumberType::class)
+                ->add('type', EntityType::class,[
+                    "class"=>PetType::class,
+                    "choice_label"=>'name'
+                ])
+            ;
+        }
+        else{
+            $builder
+                ->add('nickname', TextType::class, [
+                    'label'=>'Nom'
+                ])
+                ->add('editPicture', FileType::class, [
+                    'label'=>'Photo'
+                ])
+                ->add('description', TextareaType::class)
+                ->add('age', NumberType::class)
+                ->add('type', EntityType::class,[
+                    "class"=>PetType::class,
+                    "choice_label"=>'name'
+                ])
+            ;
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver){
 
         $resolver->setDefaults([
             'data_class' => Pet::class,
+            'ajout'=>false
         ]);
     }
 }

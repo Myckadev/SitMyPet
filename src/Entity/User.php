@@ -130,9 +130,16 @@ class User implements UserInterface, \Serializable
      */
     private $animaux;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Planning::class, mappedBy="sitter")
+     */
+    private $plannings;
+
+
     public function __construct()
     {
         $this->animaux = new ArrayCollection();
+        $this->plannings = new ArrayCollection();
     }
 
 
@@ -455,6 +462,38 @@ class User implements UserInterface, \Serializable
 
         return $this;
     }
-    
+
+    /**
+     * @return Collection|Planning[]
+     */
+    public function getPlannings(): Collection
+    {
+        return $this->plannings;
+    }
+
+    public function addPlanning(Planning $planning): self
+    {
+        if (!$this->plannings->contains($planning)) {
+            $this->plannings[] = $planning;
+            $planning->setSitter($this);
+        }
+
+        return $this;
+    }
+
+    public function removePlanning(Planning $planning): self
+    {
+        if ($this->plannings->removeElement($planning)) {
+            // set the owning side to null (unless already changed)
+            if ($planning->getSitter() === $this) {
+                $planning->setSitter(null);
+            }
+        }
+
+        return $this;
+    }
+
+
+
 
 }

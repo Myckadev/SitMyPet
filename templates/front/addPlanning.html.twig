@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvelle Annonce{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" />
+
+    <link rel="stylesheet" href="{{ asset('css/animated.css')}}">
+    <link rel="stylesheet" href="{{ asset('css/fontawesome.css')}}">
+    <link rel="stylesheet" href="{{ asset('css/owl.css')}}">
+    <link rel="stylesheet" href="{{ asset('css/templatemo-plot-listing.css')}}">
+    <link rel="stylesheet" href="{{ asset('css/style.css')}}">
+{% endblock %}
+
+{% block body %}
+
+    <div class="mainContainer addAnnonceMain">
+    <div class="header-text">
+        <h1 class="text-center">Ajouter un planning</h1>
+    </div>
+    <div class="form-container mx-auto">
+        {{ form_start(planningForm) }}
+        <div class="row">
+            <div class="col">
+                {{ form_row(planningForm.title) }}
+            </div>
+        </div>
+        <div class="row my-3">
+            <div class="col">{{ form_row(planningForm.date_start) }}</div>
+            <div class="col">{{ form_row(planningForm.date_end) }}</div>
+        </div>
+        <div class="row">
+            {{ form_row(planningForm.pet_type) }}
+        </div>
+        <div class="row w-75 mx-auto justify-content-center">
+            <button type="submit" class="btn btn-dark align-self-lg-center w-50">Ajouter</button>
+        </div>
+
+
+        {{ form_end(planningForm) }}
+
+    </div>
+{% endblock %}
