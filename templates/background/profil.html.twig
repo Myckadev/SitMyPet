@@ -17,9 +17,17 @@
                             <div class="row">
                                 <div class="offset-2 col-md-9">
                                     <a href="{{ path('app_profil_settings', {'id': app.user.id}) }}"
-                                       class="profile-edit-btn btn btn-dark">Modifier le profil</a><a
-                                            href="{{ path('addAnnonce') }}"
-                                            class="profile-edit-btn btn btn-dark my-2">Ajouter une annonce</a>
+                                       class="profile-edit-btn btn btn-dark">Modifier le profil</a>
+                                    {% if app.user.roles[0]=="ROLE_MASTER" %}
+
+                                        <a
+                                                href="{{ path('addAnnonce') }}"
+                                                class="profile-edit-btn btn btn-dark my-2">Ajouter une annonce</a>
+                                    {% elseif app.user.roles[0]=="ROLE_SITTER" %}
+
+                                        <a href="{{ path('addPlanning') }}"
+                                           class="profile-edit-btn btn btn-dark my-2">Ajouter un planning</a>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
@@ -29,12 +37,17 @@
                         <div class="profile-head  profilInfo">
                             <h3 class="profilInfo">
                                 {{ app.user.prenom }} <br>{{ app.user.nom }}
+                                {% if app.user.roles[0]=="ROLE_SITTER" and app.user.sitterVerifie %}
+                                    <a href="" class="btn btn-primary user-check"><i class="fa fa-check"></i></a>
+                                {% endif %}
                             </h3>
                             <h5 class="profilInfo">
                                 <i class="fa fa-birthday-cake"></i> : {{ app.user.age }} ans
                             </h5>
-                            <H5 class="profile-rating  profilInfo"><i class="fa fa-star"></i> :
-                                <span> {{ app.user.note }}</span>/10</H5>
+                            {% if app.user.roles[0]=="ROLE_SITTER" %}
+                                <H5 class="profile-rating  profilInfo"><i class="fa fa-star"></i> :
+                                    <span> {{ app.user.note }}</span>/10</H5>
+                            {% endif %}
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
                                 <li class="nav-item">
                                     <a class="nav-link active buttonProfile"
@@ -45,7 +58,7 @@
                                     <a class="nav-link  buttonProfile"
                                        id="profile-tab" data-toggle="tab" href="#profile" role="tab"
                                        aria-controls="profile" aria-selected="false">
-                                        <h4>{% if app.user.roles('ROLES_MASTER') %}
+                                        <h4>{% if app.user.roles[0]=="ROLE_MASTER" %}
                                                 <i class="fa fa-calendar"></i>
                                             {% else %}
                                                 <i class="fa fa-euro"></i>
@@ -71,7 +84,8 @@
                                         <h5><i class="fa fa-user fa-2x"></i></h5>
                                     </div>
                                     <div class="col-lg-3">
-                                        <h5>{{ app.user.username }} {{ app.user.sitter_verifie }}</h5>
+                                        <h5>{{ app.user.username }}
+                                        </h5>
                                     </div>
                                 </div>
                                 <div class="row  profilInfoInt">
@@ -99,10 +113,12 @@
                                     </div>
                                 </div>
                                 <div class="row ">
-                                    {% if app.user.roles('ROLES_MASTER') %}
+                                    {% if app.user.roles[0]=="ROLE_MASTER" %}
+                                        <h3 class="my-3">Animaux</h3>
                                         {% for pet in pets |slice(0, 3) %}
                                             <div class="col-lg-3">
-                                                <div class="pet-col"><a href=""><img
+                                                <div class="pet-col"><a href="{{ path('app_profil_pet', {'id': pet.id}) }}
+"><img
                                                                 class="addPet"
                                                                 src="{{ asset('upload/') }}{{ pet.picture }}"
                                                                 alt=""/></a>
@@ -124,13 +140,13 @@
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                {% if app.user.roles('ROLES_MASTER') %}
+                                {% if app.user.roles[0]=="ROLE_MASTER" %}
                                     <div class="row  profilInfoInt">
                                         <div class="col-md my-3">
                                             <h5>Annonces : </h5>
                                         </div>
                                         <div class="needContainer">
-                                            <table class="table table-hover table-dark">
+                                            <table class="table table-hover">
                                                 <thead>
                                                 <tr>
                                                     <th>Titre</th>
@@ -163,30 +179,47 @@
                                             </table>
                                         </div>
                                     </div>
-                                {% else %}
+                                {% elseif app.user.roles[0]=="ROLE_SITTER" %}
                                     <div class="row  profilInfoInt">
                                         <div class="col-md">
-                                            <h5>Tarifs : </h5>
+                                            <h5>Tarif journalier : </h5>
+                                            <h5 class="my-3">Plannings :</h5>
                                         </div>
                                         <div class="col-md">
                                             <h5>{{ app.user.tarif }} €</h5>
                                         </div>
                                     </div>
                                     <div class="row profilInfoInt">
-                                        <div class="col-md">
-                                            <h5>Hourly Rate</h5>
-                                        </div>
-                                        <div class="col-md">
-                                            <h5>10$/hr</h5>
-                                        </div>
-                                    </div>
-                                    <div class="row  profilInfoInt">
-                                        <div class="col-md">
-                                            <h5>Total Projects</h5>
-                                        </div>
-                                        <div class="col-md">
-                                            <h5>230</h5>
-                                        </div>
+                                        <table class="table">
+                                            <thead>
+                                            <tr>
+                                                <th>Titre</th>
+                                                <th>Date de début</th>
+                                                <th>Date de fin</th>
+                                                <th>Animaux souhaité</th>
+                                                <th >Action</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for planning in plannings %}
+                                                <tr>
+                                                    <td>{{ planning.title }}</td>
+                                                    <td>{{ planning.getDateStart | format_datetime('short', 'short', locale='fr')  }}</td>
+                                                    <td>{{ planning.getDateEnd | format_datetime('short', 'short', locale='fr')  }}</td>
+                                                    <td>
+                                                        {% for petType in planning.getPetType %}
+                                                            {{ petType.name }}<span>,</span>
+                                                        {% endfor %}
+                                                    </td>
+                                                    <td>
+                                                        <a href="{{ path('editPlanning', {'id': planning.getId}) }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
+                                                        <a href="{{ path('deletePlanning/{id}', {'id': planning.getId}) }}" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                                                    </td>
+
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
                                     </div>
 
 

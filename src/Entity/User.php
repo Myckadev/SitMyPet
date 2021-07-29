@@ -131,6 +131,11 @@ class User implements UserInterface, \Serializable
     private $animaux;
 
     /**
+     * @ORM\OneToMany(targetEntity=Annonce::class, mappedBy="master")
+     */
+    private $annonces;
+
+    /**
      * @ORM\OneToMany(targetEntity=Planning::class, mappedBy="sitter")
      */
     private $plannings;
@@ -139,6 +144,7 @@ class User implements UserInterface, \Serializable
     public function __construct()
     {
         $this->animaux = new ArrayCollection();
+        $this->annonces = new ArrayCollection();
         $this->plannings = new ArrayCollection();
     }
 
@@ -487,6 +493,36 @@ class User implements UserInterface, \Serializable
             // set the owning side to null (unless already changed)
             if ($planning->getSitter() === $this) {
                 $planning->setSitter(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Annonce[]
+     */
+    public function getAnnonces(): Collection
+    {
+        return $this->annonces;
+    }
+
+    public function addAnnonce(Annonce $annonce): self
+    {
+        if (!$this->annonces->contains($annonce)) {
+            $this->annonces[] = $annonce;
+            $annonce->setMaster($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnnonce(Annonce $annonce): self
+    {
+        if ($this->annonces->removeElement($annonce)) {
+            // set the owning side to null (unless already changed)
+            if ($annonce->getMaster() === $this) {
+                $annonce->setMaster(null);
             }
         }
 

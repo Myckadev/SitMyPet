@@ -62,9 +62,7 @@ class ContactFormType extends AbstractType
                         'message'=>'Veuillez poser votre question.'
                     ]),
                     new Length([
-                        'min'=>20,
-                        'minMessage'=>"Veuillez être plus précis dans vos demandes.",
-                        'max'=>255,
+                        'max'=>2000,
                         'maxMessage'=>"Message trop long."
                     ])
                 ]

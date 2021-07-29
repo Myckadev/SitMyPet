@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil{% endblock %}
+
+{% block body %}
+    <div class="mainContainer profilContainer">
+        <div class="container emp-profile backgroundProfile profilePet col-lg-6" >
+            <form method="post">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="profile-img">
+                            <img style="max-width: 290px;  border-radius: 50px"
+                                 src="{{ asset('upload/') }}{{ pet.picture }}"
+                                 alt=""/>
+                        </div>
+                        <div class=" align-items-center">
+                            <div class="row">
+                                <div class="">
+                                    <a href="{{ path('app_pet_settings', {'id': pet.id}) }}"
+                                       class="profile-edit-btn btn btn-dark" style="margin-bottom:11px" >Modifier le pet</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="profile-head  profilInfo">
+                            <h1 class="profilInfo" style="margin-left: -10px; margin-top: -10px">{{ pet.nickname }}</h1>
+                            <h5 class="profilInfo" style="margin-left: -10px"><i class="fa fa-birthday-cake"></i> : {{ pet.age }} ans</h5>
+                            <h5 class="profilInfo" style="margin-left: -10px">Espèce : {{ type.name }}</h5>
+                            <h5><i class="fa fa-user fa-2x"></i> : {{ app.user.username }} {{ app.user.sitter_verifie }}</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="profile-work  description">
+                            <h4>Description:</h4><br> {{ pet.description }}
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    {% block javascripts %}
+        {{ parent() }}
+
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="{{ asset('js/custom.js') }}">
+        </script>
+    {% endblock %}
+
+{% endblock %}
+
+

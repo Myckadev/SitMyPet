@@ -4,28 +4,75 @@
 /* Fin du style du header */
 
 /* Style du body*/
-/*Couleurs police*/
-/*h1,h2,h3,h4,h5,h6,p {*/
-/*    color: #2D3E4E;*/
-/*}*/
+Couleurs police
+h1,h2,h3,h4,h5,h6,p {
+    color: #2D3E4E;
+}
+
+
+/*Page de résultats*/
+.recent-listing{
+    background-image: url('../images/dog-glasses.jpg');
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position-y: 30%;
+    background-position-x: center;
+}
+
+.recent-listing .section-heading{
+    background-color: #E8ECEB;
+    border-radius: 10px;
+    padding: 20px 0px;
+}
+
+.recent-listing.listing-home{
+    padding-top: 120px;
+    margin-top: 0;
+    padding-bottom: 120px;
+    margin-bottom: 0;
+}
+/*bouton contact*/
+.main-white-button.boutonContact a{
+    color: #8CBDB9 !important;
+    background-color: #2D3E4E;
+}
+.main-white-button.boutonContact i{
+    color: #2D3E4E !important;
+    background-color: #8CBDB9 !important;
+}
+
+.main-white-button.boutonContact:hover a{
+    color: #2D3E4E !important;
+    background-color: #8CBDB9;
+}
+
+.main-white-button.boutonContact:hover i{
+    color: #8CBDB9 !important;
+    background-color: #2D3E4E !important;
+}
 
 /*Style page profil*/
 
 .mainContainer.profilContainer{
-    background: rgb(232,236,235);
-    background: linear-gradient(180deg, rgba(232,236,235,1) 0%, rgba(224,158,80,1) 40%);
+    /*background: rgb(232,236,235);*/
+    /*background: linear-gradient(180deg, rgba(232,236,235,1) 0%, rgba(224,158,80,1) 40%);*/
 }
 
-.profilInfo>*{
-    color: #E8ECEB;
+.profilInfo*{
+    color: #2D3E4E;
 }
+
+/*.profilContainer h3{*/
+/*    color: #E8ECEB;*/
+/*}*/
 
 .profile-rating>.fa-star{
     color: yellow;
 }
 
 .profilInfoInt {
-    color: #E8ECEB;
+    color: #2D3E4E;
     align-items: center;
 }
 
@@ -36,12 +83,18 @@
 
 }
 
+.needContainer .table{
+    background-color: transparent;
+}
+
 .profilInfoInt i{
     text-align: center;
     align-self: center;
 }
 
-
+.user-check {
+    border-radius: 50px;
+}
 
 #home-tab i::before, #profile-tab i::before{
     color: #8CBDB9;
@@ -73,9 +126,10 @@
 }
 
 #myTabContent .addPetPlus:hover a{
-    color: #8CBDB9;
+    color: #2D3E4E;
     transition: 0.5s;
     background-color: #8CBDB9;
+    border: solid #2D3E4E 1px;
 }
 #myTabContent .addPetPlus:hover a>span{
     color: #2D3E4E;
@@ -677,43 +731,6 @@ div.content {
 .social-icons>*{
     width: 25%;
 }
-/*Responsive*/
-@media  (max-width: 767px) {
-
-    .main-banner{
-        height: 100em;
-    }
-
-    .form-container{
-        max-width: 90%;
-    }
-
-    form#search-form>.search-row{
-        height: 40em;
-    }
-
-    form#search-form>.search-row>*{
-        margin: 10px 0px;
-    }
-
-    .addPetMain>.form-container>form {
-        display: flex;
-        flex-direction: column;
-        justify-content: start;
-    }
-    .addPetMain > .form-container > form > div > div > div {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        margin: 30px 0px;
-    }
-
-    .social-icons{
-        justify-content: center !important;
-        margin: 0 auto;
-    }
-}
-
 .profile-img{
 
     margin-top: 50px;
@@ -771,7 +788,7 @@ div.content {
 }
 
 .backgroundProfile{
-    background-color: #2D3E4E;
+    background-color: #8CBDB9;
     border-radius: 50px;
     background-attachment: fixed;
     background-size: cover;
@@ -787,8 +804,22 @@ div.content {
 
 .buttonProfile{
 
-    background-color: #2D3E4E;
+    color: #2D3E4E;
     border-radius: 20px;
+}
+.buttonProfile i::before{
+
+    color: #2D3E4E !important;
+    border-radius: 20px;
+}
+.buttonProfile.active{
+
+    background-color: #2D3E4E !important;
+}
+
+.buttonProfile.active i::before{
+    color: #8CBDB9 !important;
+    background-color: #2D3E4E !important;
 }
 
 .addPet{
@@ -825,3 +856,54 @@ div.content {
 .social-icons>*{
     width: 25%;
 }
+
+#map {
+    height: 60%;
+    width: 60%;
+    margin: 0 auto;
+}
+/*Responsive*/
+@media  (max-width: 767px) {
+
+    .main-banner{
+        height: 100em;
+    }
+
+    .form-container{
+        max-width: 90%;
+    }
+
+    form#search-form>.search-row{
+        height: 40em;
+    }
+
+    form#search-form>.search-row>*{
+        margin: 10px 0px;
+    }
+
+    .addPetMain>.form-container>form {
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+    }
+    .addPetMain > .form-container > form > div > div > div {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin: 30px 0px;
+    }
+
+    .social-icons{
+        justify-content: center !important;
+        margin: 0 auto;
+    }
+
+    .backgroundProfile{
+        padding: 40px 80px;
+    }
+
+    .backgroundProfile .needContainer{
+        overflow-x: auto;
+    }
+}
+

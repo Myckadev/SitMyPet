@@ -1,137 +1,206 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Profil!{% endblock %}
-
-
+{% block title %}Profil de {{ user.username }}{% endblock %}
 
 {% block body %}
-
-    <div class="mainContainer">
-        <div class="container emp-profile">
+    <div class="mainContainer profilContainer">
+        <div class="container emp-profile backgroundProfile">
             <form method="post">
                 <div class="row">
-                    <div class="col-md-2">
+                    <div class="col-lg-4">
                         <div class="profile-img">
-                            <img style="max-width: 150px" src="{{ asset('upload/') }}{{ user.profilPicture }}"
+                            <img style="max-width: 290px;  border-radius: 50px"
+                                 src="{{ asset('upload/') }}{{ user.profilPicture }}"
                                  alt=""/>
                         </div>
                     </div>
-                    <div class="col-md-8">
-                        <div class="profile-head">
-                            <h5>
-                                Prénom: {{ user.prenom }} <br> Nom: {{ user.nom }}
+                    <div class="col-lg-8">
+                        <div class="profile-head  profilInfo">
+                            <h3 class="profilInfo">
+                                {{ user.prenom }} <br>{{ user.nom }}
+                                {% if user.roles[0]=="ROLE_SITTER" and user.sitterVerifie %}
+                                    <a href="" class="btn btn-primary user-check"><i class="fa fa-check"></i></a>
+                                {% endif %}
+                            </h3>
+                            <h5 class="profilInfo">
+                                <i class="fa fa-birthday-cake"></i> : {{ user.age }} ans
                             </h5>
-                            <h6>
-                                {{ user.age }} ans
-                            </h6>
-                            <p class="proile-rating">Note : <span>{{ user.note }}</span></p>
+                            {% if user.roles[0]=="ROLE_SITTER" %}
+                                <H5 class="profile-rating  profilInfo"><i class="fa fa-star"></i> :
+                                    <span> {{ user.note }}</span>/10</H5>
+                            {% endif %}
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
                                 <li class="nav-item">
-                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
-                                       aria-controls="home" aria-selected="true">Profil</a>
+                                    <a class="nav-link active buttonProfile"
+                                       id="home-tab" data-toggle="tab" href="#home" role="tab"
+                                       aria-controls="home" aria-selected="true"><h4><i class="fa fa-user"></i></h4></a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
-                                       aria-controls="profile" aria-selected="false">Tarifs</a>
+                                    <a class="nav-link  buttonProfile"
+                                       id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+                                       aria-controls="profile" aria-selected="false">
+                                        <h4>{% if user.roles[0]=="ROLE_MASTER" %}
+                                                <i class="fa fa-calendar"></i>
+                                            {% else %}
+                                                <i class="fa fa-euro"></i>
+                                            {% endif %}
+                                        </h4>
+                                    </a>
                                 </li>
                             </ul>
                         </div>
                     </div>
-                    <div class="col-md-2">
-                        <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile"/>
-                    </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-2">
-                        <div class="profile-work">
-                            <p>Description : {{ user.description }}</p>
+                    <div class="col-lg-4">
+                        <div class="profile-work  description">
+                            <h3>Description:</h3>  <br> {{ user.description }}
                         </div>
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-lg-8">
                         <div class="tab-content profile-tab" id="myTabContent">
                             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <p>Pseudo:</p>
+                                <div class="row  profilInfoInt">
+                                    <div class="col-lg-2">
+                                        <h5><i class="fa fa-user fa-2x"></i></h5>
                                     </div>
-                                    <div class="col-md-6">
-                                        <p>{{ user.username }} {{ user.sitter_verifie }}</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-2">
-                                        <p>Email:</p>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <p>{{ user.email}}</p>
+                                    <div class="col-lg-3">
+                                        <h5>{{ user.username }}
+                                        </h5>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <label>Telephone :</label>
+                                <div class="row  profilInfoInt">
+                                    <div class="col-lg-2">
+                                        <h5><i class="fa fa-at fa-2x"></i></h5>
                                     </div>
-                                    <div class="col-md-4">
-                                        <p>{{ user.telephone}}</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-2">
-                                        <label>Adresse :  </label>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <p>{{ user.adresse }} {{ user.ville }} {{ user.city }}</p>
+                                    <div class="col-lg-3">
+                                        <h5>{{ user.email }}</h5>
                                     </div>
                                 </div>
+                                <div class="row profilInfoInt">
+                                    <div class="col-lg-2">
+                                        <h5><i class="fa fa-mobile fa-2x"></i></h5>
+                                    </div>
+                                    <div class="col-lg-5">
+                                        <h5>{{ user.telephone }} 06 99 99 99 99</h5>
+                                    </div>
+                                </div>
+                                <div class="row profilInfoInt">
+                                    <div class="col-lg-2">
+                                        <h5><i class="fa fa-home fa-2x"></i></h5>
+                                    </div>
+                                    <div class="col-lg-5">
+                                        <h5>{{ user.adresse }} {{ user.city }} {{ user.ville }}</h5>
+                                    </div>
+                                </div>
+                                {#                                <div class="row ">#}
+                                {#                                    {% if user.roles[0]=='ROLE_MASTER' %}#}
+                                {#                                        <h3 class="my-3">Animaux</h3>#}
+                                {#                                        {% for pet in pets |slice(0, 3) %}#}
+                                {#                                            <div class="col-lg-3">#}
+                                {#                                                <div class="pet-col"><a href="{{ path('app_profil_pet', {'id': pet.id}) }}#}
+                                {#"><img#}
+                                {#                                                                class="addPet"#}
+                                {#                                                                src="{{ asset('upload/') }}{{ pet.picture }}"#}
+                                {#                                                                alt=""/></a>#}
+                                {#                                                </div>#}
+                                {#                                            </div>#}
+                                {#                                        {% endfor %}#}
+                                {#                                    {% endif %}#}
+                                {#                                </div>#}
                             </div>
                             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                <div class="row">
-                                    <div class="col-md">
-                                        <label>Tarifs : </label>
+                                {% if user.roles[0]=="ROLE_MASTER" %}
+                                    <div class="row  profilInfoInt">
+                                        <div class="col-md my-3">
+                                            <h5>Annonces : </h5>
+                                        </div>
+                                        <div class="needContainer">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                <tr>
+                                                    <th>Titre</th>
+                                                    <th>Description</th>
+                                                    <th>Date début</th>
+                                                    <th>Date fin</th>
+                                                    <th>Animaux</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% for annonce in annonces %}
+                                                    <tr>
+                                                        <td>{{ annonce.title }}</td>
+                                                        <td>{{ annonce.description }}</td>
+                                                        <td>{{ annonce.dateStart |date('d-m-y') }}</td>
+                                                        <td>{{ annonce.dateEnd |date('d-m-y') }}</td>
+                                                        <td>{% for pets in annonce.pets %}
+                                                                {{ pets.nickname }}
+                                                            {% endfor %}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
-                                    <div class="col-md">
-                                        <p>{{ user.tarif }}</p>
+                                {% elseif user.roles[0]=="ROLE_SITTER" %}
+                                    <div class="row  profilInfoInt">
+                                        <div class="col-md">
+                                            <h5>Tarif journalier : </h5>
+                                            <h5 class="my-3">Plannings :</h5>
+                                        </div>
+                                        <div class="col-md">
+                                            <h5>{{ user.tarif }} €</h5>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md">
-                                        <label>Hourly Rate</label>
+                                    <div class="row profilInfoInt">
+                                        <table class="table">
+                                            <thead>
+                                            <tr>
+                                                <th>Titre</th>
+                                                <th>Date de début</th>
+                                                <th>Date de fin</th>
+                                                <th>Animaux souhaité</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for planning in plannings %}
+                                                <tr>
+                                                    <td>{{ planning.title }}</td>
+                                                    <td>{{ planning.getDateStart | format_datetime('short', 'short', locale='fr')  }}</td>
+                                                    <td>{{ planning.getDateEnd | format_datetime('short', 'short', locale='fr')  }}</td>
+                                                    <td>
+                                                        {% for petType in planning.getPetType %}
+                                                            {{ petType.name }}<span>,</span>
+                                                        {% endfor %}
+                                                    </td>
+
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
                                     </div>
-                                    <div class="col-md">
-                                        <p>10$/hr</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md">
-                                        <label>Total Projects</label>
-                                    </div>
-                                    <div class="col-md">
-                                        <p>230</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md">
-                                        <label>English Level</label>
-                                    </div>
-                                    <div class="col-md">
-                                        <p>Expert</p>
-                                    </div>
-                                </div>
 
 
+                                {% endif %}
                             </div>
                         </div>
+
+
                     </div>
                 </div>
+
             </form>
         </div>
     </div>
-
 
 
     {% block javascripts %}
 
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="{{ asset('js/custom.js') }}">
+        </script>
     {% endblock %}
 
 {% endblock %}
+

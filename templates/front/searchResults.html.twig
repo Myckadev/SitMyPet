@@ -1,0 +1,132 @@
+{% extends'base.html.twig' %}
+
+{% block title %}
+    Les résultats de votre recherche
+{% endblock %}
+
+{% block body %}
+    <div class="recent-listing">
+        <div class="container">
+            <div class="row">
+
+                {% if role == 'sitter' %}
+                <div class="col-lg-12">
+                    <div class="section-heading">
+                        <h2> #Nb
+                            Sitters
+                            Disponibles</h2>
+                        <h6>Trouvez le vôtre</h6>
+                    </div>
+                </div>
+
+                <div id="map">
+
+                </div>
+                <div class="col-lg-12">
+                </div>
+                <div class="col-lg-12 results">
+                    <div class="owl-carousel owl-listing">
+                        <div class="item">
+                            <div class="row">
+                                {% for planning in plannings %}
+                                    <div class="col-lg-12">
+                                    <div class="listing-item">
+                                        <div class="left-image">
+{#                                            <a href="#"><img src="{{ asset('upload/', planning.getSitter.getProfilPicture) }}" alt=""></a>#}
+
+                                        </div>
+
+                                        <div class="right-content align-self-center">
+                                            <a href="#"><h4>{{ planning.title }}</h4></a>
+                                            <h6>
+                                                    Sitter :
+
+                                                <a href="{{ path('app_profil_others',{'username':planning.getSitter.getUsername}) }}">{{ planning.getSitter.getUsername }}</a>
+
+
+
+                                                </h6>
+                                            <span class="price"><i class="fa fa-dollar"></i> Tarif journalier : {{ planning.getSitter.getTarif }}</span>
+                                            <span class="details">Date de début: <em>{{ planning.getDateStart | format_datetime('short', 'short', locale='fr') }}</em></span>
+                                            <span class="details">Date de fin: <em>{{ planning.getDateEnd | format_datetime('short', 'short', locale='fr')}}</em></span>
+                                            <ul class="info">
+                                                <i class="fa fa-question"></i> Types d'animaux acceptés :
+                                                {% for petType in planning.getPetType %}
+                                                <p> {{petType.name }}</p>
+                                                {% endfor %}
+                                            </ul>
+                                            <div class="main-white-button boutonContact">
+                                                <a href="#"><i class="fa fa-eye"></i> Contacter </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="col-lg-12">
+                <div class="section-heading">
+                    <h2> #Nb
+                        Masters
+                        Disponibles</h2>
+                    <h6>Trouvez le vôtre</h6>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="owl-carousel owl-listing">
+                    <div class="item">
+                        <div class="row">
+                            {% for annonce in annonces %}
+                                <div class="col-lg-12">
+                                    <div class="listing-item">
+                                        <div class="left-image">
+{#                                            <a href="#"><img src="{{ asset('upload/', annonce.getMaster.getProfilPicture) }}" alt=""></a>#}
+
+                                        </div>
+
+                                        <div class="right-content align-self-center">
+                                            <a href="#"><h4>{{ annonce.title }}</h4></a>
+                                            <h6>
+                                                Master :
+
+                                                <a href="{{ path('app_profil_others',{'username':annonce.getMaster.getUsername}) }}">{{ annonce.getMaster.getUsername }}</a>
+
+
+
+                                            </h6>
+                                            <span class="details">Date de début: <em>{{ annonce.getDateStart | format_datetime('short', 'short', locale='fr') }}</em></span>
+                                            <span class="details">Date de fin: <em>{{ annonce.getDateStart | format_datetime('short', 'short', locale='fr')}}</em></span>
+                                            <ul class="info">
+                                                <i class="fa fa-question"></i> Animaux :
+                                                {% for pet in annonce.getPets %}
+                                                    <p> {{pet.getNickName }}</p>
+                                                    <p>( {{pet.getType.getName }} )</p>
+                                                {% endfor %}
+                                            </ul>
+                                            <div class="main-white-button boutonContact">
+                                                <a href="#"><i class="fa fa-eye"></i> Contacter </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            {% endif %}
+        </div>
+    </div>
+    {% block javascripts %}
+        {{ parent() }}
+{#        <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>#}
+        <script src="{{ asset('js/map.js') }}"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyChmU0WSDb8mEGXaJ9upLb2ZT1KYvEmEkU&callback=initMap" async></script>
+    {% endblock %}
+{% endblock %}
+

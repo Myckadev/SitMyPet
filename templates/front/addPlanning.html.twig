@@ -10,34 +10,42 @@
     <link rel="stylesheet" href="{{ asset('css/owl.css')}}">
     <link rel="stylesheet" href="{{ asset('css/templatemo-plot-listing.css')}}">
     <link rel="stylesheet" href="{{ asset('css/style.css')}}">
+    <link rel="stylesheet" href="{{ asset('css/select2.css') }}"
 {% endblock %}
 
 {% block body %}
 
     <div class="mainContainer addAnnonceMain">
-    <div class="header-text">
-        <h1 class="text-center">Ajouter un planning</h1>
-    </div>
-    <div class="form-container mx-auto">
-        {{ form_start(planningForm) }}
-        <div class="row">
-            <div class="col">
-                {{ form_row(planningForm.title) }}
+        <div class="form-container mx-auto">
+            <div class="header-text">
+                <h1 class="text-center">Ajouter un planning</h1>
             </div>
+            {{ form_start(planningForm) }}
+            <div class="row">
+                <div class="col">
+                    {{ form_row(planningForm.title, {'label':'Titre'}) }}
+                </div>
+            </div>
+            <div class="row my-3">
+                <div class="col">{{ form_row(planningForm.date_start, {'label':'Date de début'}) }}</div>
+                <div class="col">{{ form_row(planningForm.date_end, {'label':'Date de fin'}) }}</div>
+            </div>
+            <div class="row">
+                {{ form_row(planningForm.pet_type, {'attr':{'class':'select2'}, 'label':'Type d\'animal'}) }}
+            </div>
+            <div class="row w-75 mx-auto justify-content-center">
+                <button type="submit" class="btn btn-dark align-self-lg-center w-50">Ajouter</button>
+            </div>
+            {{ form_end(planningForm) }}
         </div>
-        <div class="row my-3">
-            <div class="col">{{ form_row(planningForm.date_start) }}</div>
-            <div class="col">{{ form_row(planningForm.date_end) }}</div>
-        </div>
-        <div class="row">
-            {{ form_row(planningForm.pet_type) }}
-        </div>
-        <div class="row w-75 mx-auto justify-content-center">
-            <button type="submit" class="btn btn-dark align-self-lg-center w-50">Ajouter</button>
-        </div>
-
-
-        {{ form_end(planningForm) }}
-
     </div>
+    {% block javascripts %}
+        {{ parent() }}
+        <script src="{{ asset('js/select2.js') }}"></script>
+        <script>
+            $(function () {
+                $('.select2').select2()
+            })
+        </script>
+    {% endblock %}
 {% endblock %}

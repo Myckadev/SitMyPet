@@ -21,10 +21,18 @@ class PlanningFormType extends AbstractType
 
             ])
             ->add('date_start', DateTimeType::class, [
-
+                "html5"=>false,
+                "format" => 'd-M-y',
+                "data" => new \DateTime(),
+                "widget"=>"choice",
+                "minutes"=>[0, 15, 30, 45]
             ])
             ->add('date_end', DateTimeType::class, [
-
+                "html5"=>false,
+                "format" => 'd-M-y',
+                "data" => new \DateTime(),
+                "widget"=>"choice",
+                "minutes"=>[0, 15, 30, 45]
             ])
             ->add('pet_type', EntityType::class, [
                 'class'=>PetType::class,

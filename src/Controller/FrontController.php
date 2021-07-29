@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Annonce;
 use App\Entity\Pet;
+use App\Entity\PetType;
 use App\Entity\Planning;
 use App\Entity\User;
 use App\Form\AnnonceFormType;
@@ -11,6 +12,8 @@ use App\Form\ContactFormType;
 use App\Form\PetFormType;
 use App\Form\PlanningFormType;
 use App\Form\UserProfilFormType;
+use App\Repository\AnnonceRepository;
+use App\Repository\PetRepository;
 use App\Repository\PlanningRepository;
 use App\Service\MailGenerator;
 use Doctrine\ORM\EntityManagerInterface;
@@ -19,6 +22,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Address;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 
 class FrontController extends AbstractController
@@ -26,9 +31,14 @@ class FrontController extends AbstractController
     /**
      * @Route("/", name="home")
      */
-    public function home()
+    public function home(AnnonceRepository $annonceRepository)
     {
-        return $this->render('front/home.html.twig');
+        $listAnnonce = $annonceRepository->findByDescId();
+        //dd($listAnnonce);
+
+        return $this->render('front/home.html.twig', [
+            'listAnnonce'=>$listAnnonce
+        ]);
     }
 
     /**
@@ -47,22 +57,26 @@ class FrontController extends AbstractController
      * @Route("/profil/{username}", name="app_profil_others")
      * @Security("is_granted('ROLE_MASTER') or is_granted('ROLE_SITTER')")
      */
-    public function profilOthers(User $user, Request $request){
+    public function profilOthers(User $user, Request $request, AnnonceRepository $annonceRepository, PlanningRepository $planningRepository){
 
         $post = $request->attributes->get('user');
+        $annonces = $annonceRepository->findBy(["master"=> $post->getId()]);
+        $plannings = $planningRepository->findBy(["sitter"=> $post->getId()]);
         if($this->getUser() == $post){
             return $this->redirectToRoute('app_profil');
         }
 
         return $this->render('background/profil_others.html.twig', [
-            'user'=>$post
+            'user'=>$post,
+            'annonces'=>$annonces,
+            'plannings'=>$plannings
         ]);
     }
 
     /**
      * @Route("/profil/settings/{id}", name="app_profil_settings")
      */
-    public function profilSettings(User $user, Request $request,EntityManagerInterface $entityManager){
+    public function profilSettings(User $user, Request $request, EntityManagerInterface $entityManager){
 
         $post = $request->attributes->get('user');
         if($this->getUser() != $post){
@@ -118,28 +132,20 @@ class FrontController extends AbstractController
      * @Route("/contact", name="contact")
      * @throws TransportExceptionInterface
      */
-    public function contact(Request $request, MailGenerator $mailGenerator, MailerInterface $mailer){
+    public function contact(Request $request, MailerInterface $mailer){
 
         $form = $this->createForm(ContactFormType::class);
         $form->handleRequest($request);
 
-        if($form->isValid() && $form->isSubmitted()){
+        if($form->isSubmitted() && $form->isValid()){
 
-            dd($form->getData());
-            $mail = $form['mail']->getData();
-            $subject = $form['need']->getData();
-            $message = $form['message']->getData();
-            $nom = $form['nom']->getData();
-            $prenom = $form['prenom']->getData();
+            $email = (new Email())
+                ->from($form->get('mail')->getData())
+                ->to(new Address('majdev767@gmail.com', "SitMyPet"))
+                ->subject($form->get('need')->getData())
+                ->text($form->get('message')->getData());
 
-            $mailGenerator->sendMail(
-                $mailer,
-                'majdev767@gmail.com',
-                "$mail",
-                "$subject",
-                "$message",
-                ""
-            );
+            $mailer->send($email);
         }
 
         return $this->render('contact/contact.html.twig', [
@@ -149,9 +155,14 @@ class FrontController extends AbstractController
 
     /**
      * @Route("/addpet/{id}", name="addPet")
+     * @Security ("is_granted('ROLE_MASTER')")
      */
     public function addPet(User $user, Request $request, EntityManagerInterface  $manager)
     {
+        $post = $request->attributes->get('user');
+        if($this->getUser() != $post){
+            return $this->redirectToRoute("app_profil");
+        }
 
         $form=$this->createForm(PetFormType::class, null, array('ajout' => true));
         $form->handleRequest($request);
@@ -174,7 +185,6 @@ class FrontController extends AbstractController
                 $pet->setPicture($namePicture);
             }
 
-
             $manager->persist($pet);
             $manager->flush();
 
@@ -190,10 +200,15 @@ class FrontController extends AbstractController
 
     /**
      * @Route("/pet/settings/{id}", name="app_pet_settings")
+     * @Security("is_granted('ROLE_MASTER')")
      */
     public function petSettings(Pet $pet, Request $request,EntityManagerInterface $entityManager){
 
-        //dd($pet, $pet->getPicture());
+        $petUser = $pet->getUser()->getId();
+        if ($petUser != $this->getUser()->getId()) {
+            return $this->redirectToRoute("app_profil");
+        }
+
         $form = $this->createForm(PetFormType::class, $pet);
         $form->handleRequest($request);
 
@@ -226,8 +241,13 @@ class FrontController extends AbstractController
      * @Route("/deletePet/{id}", name="deletePet")
      * @Security ("is_granted('ROLE_MASTER')")
      */
-    public function deletePet(Pet $pet, EntityManagerInterface $manager)
-    {
+    public function deletePet(Pet $pet, EntityManagerInterface $manager){
+
+        $petUser = $pet->getUser()->getId();
+        if ($petUser != $this->getUser()->getId()) {
+            return $this->redirectToRoute("app_profil");
+        }
+
         $manager->remove($pet);
         $manager->flush();
 
@@ -240,8 +260,8 @@ class FrontController extends AbstractController
      * @Route("/addAnnonce", name="addAnnonce")
      * @Security("is_granted('ROLE_MASTER')")
      */
-    public function addAnnonce(Request $request, EntityManagerInterface $manager)
-    {
+    public function addAnnonce(Request $request, EntityManagerInterface $manager){
+
         $annonce = new Annonce();
         $form = $this->createForm(AnnonceFormType::class, $annonce);
         $form->handleRequest($request);
@@ -262,9 +282,15 @@ class FrontController extends AbstractController
 
     /**
      * @Route("/deleteAnnonce/{id}", name="deleteAnnonce")
+     * * @Security("is_granted('ROLE_MASTER')")
      */
-    public function deleteAnnonce(Annonce $annonce, EntityManagerInterface $manager)
-    {
+    public function deleteAnnonce(Annonce $annonce, EntityManagerInterface $manager){
+
+        $annonceUser = $annonce->getMaster()->getId();
+        if ($annonceUser != $this->getUser()->getId()) {
+            return $this->redirectToRoute("app_profil");
+        }
+
         $manager->remove($annonce);
         $manager->flush();
 
@@ -273,14 +299,16 @@ class FrontController extends AbstractController
         return $this->redirectToRoute('app_profil');
     }
 
-
-
-
     /**
      * @Route("/editAnnonce/{id}", name="editAnnonce")
+     * @Security("is_granted('ROLE_MASTER')")
      */
-    public function editAnnonce(Annonce $annonce, Request $request, EntityManagerInterface $manager)
-    {
+    public function editAnnonce(Annonce $annonce, Request $request, EntityManagerInterface $manager){
+
+        $annonceUser = $annonce->getMaster()->getId();
+        if ($annonceUser != $this->getUser()->getId()) {
+            return $this->redirectToRoute("app_profil");
+        }
 
         $form = $this->createForm(AnnonceFormType::class, $annonce);
         $form->handleRequest($request);
@@ -300,6 +328,7 @@ class FrontController extends AbstractController
 
     /**
      * @Route("/addplanning", name="addPlanning")
+     * @Security("is_granted('ROLE_SITTER')")
      */
     public function addPlanning(Request $request, EntityManagerInterface $entityManager, PlanningRepository $planningRepository){
 
@@ -330,6 +359,7 @@ class FrontController extends AbstractController
 
     /**
      * @Route("/listplanning", name="listPlanning")
+     * @Security("is_granted('ROLE_SITTER')")
      */
     public function listPlanning(PlanningRepository $planningRepository){
 
@@ -341,8 +371,14 @@ class FrontController extends AbstractController
 
     /**
      * @Route("/deleteplanning/{id}", name="deletePlanning/{id}")
+     * @Security("is_granted('ROLE_SITTER')")
      */
     public function deletePlanning(Planning $planning, EntityManagerInterface  $entityManager){
+
+        $planningUser = $planning->getSitter()->getId();
+        if ($planningUser != $this->getUser()->getId()) {
+            return $this->redirectToRoute("app_profil");
+        }
 
         $entityManager->remove($planning);
         $entityManager->flush();
@@ -352,8 +388,14 @@ class FrontController extends AbstractController
 
     /**
      * @Route("/editPlanning/{id}", name="editPlanning")
+     * @Security("is_granted('ROLE_SITTER')")
      */
     public function editPlanning(Request $request, EntityManagerInterface $entityManager, Planning $planning){
+
+        $planningUser = $planning->getSitter()->getId();
+        if ($planningUser != $this->getUser()->getId()) {
+            return $this->redirectToRoute("app_profil");
+        }
 
         $form = $this->createForm(PlanningFormType::class, $planning);
         $form->handleRequest($request);
@@ -378,6 +420,102 @@ class FrontController extends AbstractController
             'planningForm'=>$form->createView()
         ]);
 
+    }
+
+    public function isDateBetweenDates(\DateTime $userStart, \DateTime $userEnd,  \DateTime $startDate, \DateTime $endDate) {
+        return $userStart >= $startDate && $userEnd <= $endDate;
+    }
+
+    /**
+     * @Route("/searchResults", name="searchResults")
+     */
+    public function searchResults(Request $request, PlanningRepository $planningRepository, AnnonceRepository $annonceRepository){
+
+        $role = $request->request->get('role');
+        $location = $request->request->get('location');
+        $dateStart = $request->request->get('start-date');
+        $dateEnd = $request->request->get('end-date');
+        $budget = $request->request->get('budget');
+        $userStart = new \DateTime($dateStart);
+        $userEnd = new \DateTime($dateEnd);
+
+        $returnPlanning = [];
+        $returnAnnonce =[];
+        if($role == 'sitter'){
+            $plannings = $planningRepository->findAll();
+            foreach ($plannings as $planning){
+                $startDate = new \DateTime($planning->getDateStart()->format('Y-m-d'));
+                $endDate = new \DateTime($planning->getDateEnd()->format('Y-m-d'));
+                if(
+                    $this->isDateBetweenDates($userStart, $userEnd, $startDate, $endDate) &&
+                    $planning->getSitter()->getTarif()<=$budget &&
+                    $planning->getSitter()->getVille() == $location
+                )
+                {
+                    array_push($returnPlanning, $planning);
+                }
+            }
+        }else{
+            $annonces = $annonceRepository->findAll();
+            foreach ($annonces as $annonce){
+                $startDate = new \DateTime($annonce->getDateStart()->format('Y-m-d'));
+                $endDate = new \DateTime($annonce->getDateEnd()->format('Y-m-d'));
+                if($this->isDateBetweenDates($userStart, $userEnd, $startDate, $endDate)  && $annonce->getMaster()->getVille() == $location){
+
+                    array_push($returnAnnonce, $annonce);
+                }
+            }
+        }
+
+        return $this->render('front/searchResults.html.twig', [
+            'role'=>$role,
+            'location'=>$location,
+            'plannings'=>$returnPlanning,
+            'annonces'=>$returnAnnonce
+
+        ]);
+    }
+
+    /**
+     * @Route("/contactfromannonce/{id}", name="contactFromAnnonce")
+     * @throws TransportExceptionInterface
+     */
+    public function contactFromAnnonce(User $user, MailerInterface $mailer){
+
+        $email = (new Email())
+            ->from($user->getEmail())
+            ->to(new Address('majdev767@gmail.com', "SitMyPet"))
+            ->subject("Quelqu'un souhaites vous contacter")
+            ->html(
+                $this->renderView('mail/contactfromannonce.html.twig', [
+                    'nom'=>$user->getNom(),
+                    'prenom'=>$user->getPrenom(),
+                    'email'=>$user->getEmail()
+                ]), 'text/html'
+            );
+
+        $mailer->send($email);
+
+        return $this->redirectToRoute('home');
+
+    }
+
+    /**
+     * @Route("/profilPet/{id}", name="app_profil_pet")
+     * @Security("is_granted('ROLE_MASTER')")
+     */
+    public function profilPet(Pet $pet, Request $request, PetRepository $petRepository){
+
+        $petUser = $pet->getUser()->getId();
+        if ($petUser != $this->getUser()->getId()) {
+            return $this->redirectToRoute("app_profil");
+        }
+
+        $type = $pet->getType();
+        return $this->render('background/profilPet.html.twig',[
+            'pet'=>$pet,
+            'type'=>$type
+        ] );
     }
 
 }

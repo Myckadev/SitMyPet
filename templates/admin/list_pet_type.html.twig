@@ -1,0 +1,26 @@
+{% extends 'base_back.html.twig' %}
+
+{% block body %}
+
+    <div class="mainContainer backContainer">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Nom</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+           {% for petType in petTypes %}
+                <tr>
+                    <td>{{ petType.id }}</td>
+                    <td>{{ petType.name }}</td>
+                    <td><a href="{{ path('delete_type', {'id':petType.id}) }}" class="btn btn-danger">Supprimer</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

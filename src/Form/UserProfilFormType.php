@@ -61,7 +61,9 @@ class UserProfilFormType extends AbstractType
                 'label'=> 'Changer la photo de profil'
             ])
             ->add('description')
-            ->add('rayon_action')
+            ->add('rayon_action', TextType::class,[
+                'label'=>'Rayon d\'action en km'
+            ])
             ->add('tarif')
         ;
         $builder->get('roles')

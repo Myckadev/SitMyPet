@@ -28,6 +28,7 @@ class BackgroundController extends AbstractController
 
     /**
      * @Route("admin/addtype", name="addtype")
+     * @Security("is_granted('ROLE_ADMIN')", message="Access Denied")
      */
     public function addType(PetTypeRepository $petTypeRepository, EntityManagerInterface $manager, Request $request)
     {
@@ -60,7 +61,8 @@ class BackgroundController extends AbstractController
     }
 
     /**
-     * @Route("/listuser", name="list_user")
+     * @Route("admin/listuser", name="list_user")
+     * @Security("is_granted('ROLE_ADMIN')", message="Access Denied")
      */
     public function listUser(UserRepository $userRepository)
     {
@@ -71,7 +73,8 @@ class BackgroundController extends AbstractController
     }
 
     /**
-     * @Route("/deleteuser/{id}", name="delete_user")
+     * @Route("admin/deleteuser/{id}", name="delete_user")
+     * @Security("is_granted('ROLE_ADMIN')", message="Access Denied")
      */
     public function deleteUser(User $user, EntityManagerInterface $manager)
     {
@@ -84,7 +87,8 @@ class BackgroundController extends AbstractController
     }
 
     /**
-     * @Route("/promoteuser/{id}", name="promote_user")
+     * @Route("admin/promoteuser/{id}", name="promote_user")
+     * @Security("is_granted('ROLE_ADMIN')", message="Access Denied")
      */
     public function promoteUser(User $user, EntityManagerInterface $manager)
     {
@@ -97,7 +101,8 @@ class BackgroundController extends AbstractController
     }
 
     /**
-     * @Route("/demoteuser/{id}/{role}", name="demote_user")
+     * @Route("admin/demoteuser/{id}/{role}", name="demote_user")
+     * @Security("is_granted('ROLE_ADMIN')", message="Access Denied")
      */
     public function demoteUser(User $user, EntityManagerInterface $manager, $role)
     {
@@ -115,7 +120,8 @@ class BackgroundController extends AbstractController
     }
 
     /**
-     * @Route("/changeverify/{id}", name="change_verify")
+     * @Route("admin/changeverify/{id}", name="change_verify")
+     * @Security("is_granted('ROLE_ADMIN')", message="Access Denied")
      */
     public function changeVerify(User $user, EntityManagerInterface $manager)
     {
@@ -130,6 +136,32 @@ class BackgroundController extends AbstractController
 
         $this->addFlash('success', 'L\'utilisateur a bien été modifié');
         return $this->redirectToRoute('list_user');
+    }
+
+    /**
+     * @Route("list_pet_type", name="list_pet_type")
+     */
+    public function listPetType(PetTypeRepository $petTypeRepository)
+    {
+        $petTypes = $petTypeRepository->findAll();
+
+        return $this->render('admin/list_pet_type.html.twig', [
+            'petTypes'=>$petTypes
+        ]);
+    }
+
+    /**
+     * @Route("admin/delete_type{id}", name="delete_type")
+     * @Security("is_granted('ROLE_ADMIN')", message="Access Denied")
+     */
+    public function deleteType(PetType $petType, EntityManagerInterface $manager)
+    {
+        $manager->remove($petType);
+        $manager->flush();
+
+        $this->addFlash('success', 'Le type a bien été supprimé');
+
+        return $this->redirectToRoute('list_pet_type');
     }
 
 }
